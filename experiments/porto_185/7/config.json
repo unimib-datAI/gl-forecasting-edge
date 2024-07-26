@@ -1,0 +1,259 @@
+{
+ "n_nodes": 10,
+ "nodes": [
+  {
+   "id": 0,
+   "links": [
+    {
+     "node": 1,
+     "weights_transmission_time": 25,
+     "round_trip_time": 1
+    },
+    {
+     "node": 4,
+     "weights_transmission_time": 29,
+     "round_trip_time": 1
+    },
+    {
+     "node": 6,
+     "weights_transmission_time": 30,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 1,
+   "links": [
+    {
+     "node": 0,
+     "weights_transmission_time": 35,
+     "round_trip_time": 1
+    },
+    {
+     "node": 9,
+     "weights_transmission_time": 35,
+     "round_trip_time": 1
+    },
+    {
+     "node": 8,
+     "weights_transmission_time": 27,
+     "round_trip_time": 1
+    },
+    {
+     "node": 3,
+     "weights_transmission_time": 26,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "links": [
+    {
+     "node": 3,
+     "weights_transmission_time": 25,
+     "round_trip_time": 1
+    },
+    {
+     "node": 7,
+     "weights_transmission_time": 27,
+     "round_trip_time": 1
+    },
+    {
+     "node": 5,
+     "weights_transmission_time": 27,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "links": [
+    {
+     "node": 1,
+     "weights_transmission_time": 25,
+     "round_trip_time": 1
+    },
+    {
+     "node": 2,
+     "weights_transmission_time": 27,
+     "round_trip_time": 1
+    },
+    {
+     "node": 5,
+     "weights_transmission_time": 31,
+     "round_trip_time": 1
+    },
+    {
+     "node": 7,
+     "weights_transmission_time": 29,
+     "round_trip_time": 1
+    },
+    {
+     "node": 9,
+     "weights_transmission_time": 25,
+     "round_trip_time": 1
+    },
+    {
+     "node": 4,
+     "weights_transmission_time": 28,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "links": [
+    {
+     "node": 0,
+     "weights_transmission_time": 26,
+     "round_trip_time": 1
+    },
+    {
+     "node": 3,
+     "weights_transmission_time": 25,
+     "round_trip_time": 1
+    },
+    {
+     "node": 6,
+     "weights_transmission_time": 30,
+     "round_trip_time": 1
+    },
+    {
+     "node": 9,
+     "weights_transmission_time": 26,
+     "round_trip_time": 1
+    },
+    {
+     "node": 8,
+     "weights_transmission_time": 27,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "links": [
+    {
+     "node": 2,
+     "weights_transmission_time": 26,
+     "round_trip_time": 1
+    },
+    {
+     "node": 3,
+     "weights_transmission_time": 26,
+     "round_trip_time": 1
+    },
+    {
+     "node": 7,
+     "weights_transmission_time": 33,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "links": [
+    {
+     "node": 0,
+     "weights_transmission_time": 30,
+     "round_trip_time": 1
+    },
+    {
+     "node": 4,
+     "weights_transmission_time": 29,
+     "round_trip_time": 1
+    },
+    {
+     "node": 8,
+     "weights_transmission_time": 25,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "links": [
+    {
+     "node": 2,
+     "weights_transmission_time": 35,
+     "round_trip_time": 1
+    },
+    {
+     "node": 3,
+     "weights_transmission_time": 33,
+     "round_trip_time": 1
+    },
+    {
+     "node": 5,
+     "weights_transmission_time": 25,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "links": [
+    {
+     "node": 1,
+     "weights_transmission_time": 28,
+     "round_trip_time": 1
+    },
+    {
+     "node": 4,
+     "weights_transmission_time": 28,
+     "round_trip_time": 1
+    },
+    {
+     "node": 6,
+     "weights_transmission_time": 30,
+     "round_trip_time": 1
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "links": [
+    {
+     "node": 1,
+     "weights_transmission_time": 25,
+     "round_trip_time": 1
+    },
+    {
+     "node": 3,
+     "weights_transmission_time": 32,
+     "round_trip_time": 1
+    },
+    {
+     "node": 4,
+     "weights_transmission_time": 30,
+     "round_trip_time": 1
+    }
+   ]
+  }
+ ],
+ "training": {
+  "patience": 5,
+  "min_delta": 0.0,
+  "perc_sent_weights": 1.0,
+  "target_probability": 1.0,
+  "models_folder": "models/",
+  "n_input_features": 9,
+  "n_output_vars": 1,
+  "merge_strategy": "age_weighted",
+  "batch_size": 64,
+  "epochs_per_update": 4,
+  "stop_criterion": "fixed_updates",
+  "fixed_updates": 25,
+  "num_merged_models": 1,
+  "shuffle_batch": true,
+  "finetuning_epochs": 0,
+  "serialize_optimizer": false
+ },
+ "log_level": 2,
+ "workspace_dir": "experiments/porto_185/7",
+ "history": {
+  "eval_test": false,
+  "freq": 5
+ }
+}
