@@ -1,0 +1,1345 @@
+[INFO]  [2s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [0, 8]
+[INFO]  [3s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [1, 3]
+[INFO]  [7s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [0, 2, 3]
+[INFO]  [17s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [9, 5]
+[INFO]  [20s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [9, 2]
+[INFO]  [21s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [7, 5]
+[INFO]  [24s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [7, 8]
+[INFO]  [28s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [31s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [8, 4]
+[INFO]  [31s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [32s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [7, 6]
+[INFO]  [33s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 improved loss by inf. Early stopping is reset.
+[INFO]  [34s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [34s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [35s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [2, 3]
+[INFO]  [35s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [35s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 is already training! Received weights are discarded
+[INFO]  [36s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 improved loss by inf. Early stopping is reset.
+[INFO]  [39s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 improved loss by 2568.3418. Early stopping is reset.
+[INFO]  [39s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 improved loss by inf. Early stopping is reset.
+[INFO]  [40s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 improved loss by inf. Early stopping is reset.
+[INFO]  [42s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [42s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [3, 2, 4]
+[INFO]  [43s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [6, 1]
+[INFO]  [43s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [8, 2]
+[INFO]  [44s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [45s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [5, 9]
+[INFO]  [45s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [47s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 improved loss by inf. Early stopping is reset.
+[INFO]  [48s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [49s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [49s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [9, 3]
+[INFO]  [49s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 is already training! Received weights are discarded
+[INFO]  [49s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by inf. Early stopping is reset.
+[INFO]  [50s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [7, 4]
+[INFO]  [50s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [50s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by inf. Early stopping is reset.
+[INFO]  [52s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [52s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 is already training! Received weights are discarded
+[INFO]  [52s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [0, 5]
+[INFO]  [53s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 2
+[INFO]  [54s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 8
+[INFO]  [55s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 improved loss by inf. Early stopping is reset.
+[INFO]  [57s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 5
+[INFO]  [60s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [65s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 8
+[INFO]  [66s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [66s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [66s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [66s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [8, 0]
+[INFO]  [67s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [67s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [67s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [0, 6]
+[INFO]  [67s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [2, 1]
+[INFO]  [70s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 is already training! Received weights are discarded
+[INFO]  [71s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 2
+[INFO]  [71s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by inf. Early stopping is reset.
+[INFO]  [71s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 improved loss by inf. Early stopping is reset.
+[INFO]  [72s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [72s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [72s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 3
+[INFO]  [72s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 improved loss by 19238.2793. Early stopping is reset.
+[INFO]  [73s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [73s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [1, 5]
+[INFO]  [75s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [75s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [76s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [76s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [2, 5]
+[INFO]  [76s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [77s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [77s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 is already training! Received weights are discarded
+[INFO]  [77s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [4, 2, 0]
+[INFO]  [77s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [9, 1]
+[INFO]  [77s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 1
+[INFO]  [77s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 5.5882. Early stopping is reset.
+[INFO]  [78s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 9
+[INFO]  [78s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [80s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 improved loss by 82.1570. Early stopping is reset.
+[INFO]  [80s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 2
+[INFO]  [81s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [81s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [8, 5]
+[INFO]  [81s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 8
+[INFO]  [81s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 improved loss by 14712.6001. Early stopping is reset.
+[INFO]  [82s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by 6.4898. Early stopping is reset.
+[INFO]  [83s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [83s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by 0.5951. Early stopping is reset.
+[INFO]  [84s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [84s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [84s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [0, 7]
+[INFO]  [84s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [3, 9]
+[INFO]  [86s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 improved loss by 372.2312. Early stopping is reset.
+[INFO]  [88s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 5
+[INFO]  [89s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 0
+[INFO]  [89s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 improved loss by 2.1228. Early stopping is reset.
+[INFO]  [92s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [94s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 is already training! Received weights are discarded
+[INFO]  [95s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [8, 0]
+[INFO]  [95s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [97s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 improved loss by 11203.0054. Early stopping is reset.
+[INFO]  [98s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [1, 2]
+[INFO]  [98s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [98s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [100s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [100s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 improved loss by 2.6327. Early stopping is reset.
+[INFO]  [101s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [0, 7]
+[INFO]  [101s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [103s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 improved loss by 4.0068. Early stopping is reset.
+[INFO]  [103s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 2
+[INFO]  [104s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [105s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [105s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 1.3442. Early stopping is reset.
+[INFO]  [106s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [106s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [106s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [106s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 is already training! Received weights are discarded
+[INFO]  [106s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [1, 9]
+[INFO]  [106s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [5, 9]
+[INFO]  [106s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 6
+[INFO]  [108s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [5, 2]
+[INFO]  [108s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [109s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 0
+[INFO]  [110s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [110s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [110s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [5, 7]
+[INFO]  [110s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 9
+[INFO]  [111s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 3.3337. Early stopping is reset.
+[INFO]  [111s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 1
+[INFO]  [111s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 improved loss by 6.4039. Early stopping is reset.
+[INFO]  [112s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 is already training! Received weights are discarded
+[INFO]  [112s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [6, 4, 3]
+[INFO]  [113s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [113s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 improved loss by 332.5640. Early stopping is reset.
+[INFO]  [115s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [115s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 4
+[INFO]  [116s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [5, 7]
+[INFO]  [116s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [118s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by 0.3689. Early stopping is reset.
+[INFO]  [119s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [119s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [2, 3]
+[INFO]  [120s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 improved loss by 66.2798. Early stopping is reset.
+[INFO]  [121s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 is already training! Received weights are discarded
+[INFO]  [121s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 improved loss by 1914.3955. Early stopping is reset.
+[INFO]  [124s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [8, 4]
+[INFO]  [124s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [124s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 improved loss by 0.0412. Early stopping is reset.
+[INFO]  [128s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [129s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [129s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [129s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [1, 3]
+[INFO]  [129s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 improved loss by 4.6506. Early stopping is reset.
+[INFO]  [133s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 0
+[INFO]  [134s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [134s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 is already training! Received weights are discarded
+[INFO]  [134s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 2
+[INFO]  [134s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 improved loss by 1.0847. Early stopping is reset.
+[INFO]  [136s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [136s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 is already training! Received weights are discarded
+[INFO]  [136s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [0, 6]
+[INFO]  [138s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [138s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [9, 1]
+[INFO]  [138s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [139s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [8, 5]
+[INFO]  [139s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [139s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [139s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [1, 9]
+[INFO]  [139s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by 0.2497. Early stopping is reset.
+[INFO]  [140s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [140s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [5, 8]
+[INFO]  [140s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [141s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 7
+[INFO]  [143s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 1.3721. Early stopping is reset.
+[INFO]  [144s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 improved loss by 0.7298. Early stopping is reset.
+[INFO]  [145s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [145s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 improved loss by 3.2016. Early stopping is reset.
+[INFO]  [145s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 2
+[INFO]  [147s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [147s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [147s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [147s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [7, 0]
+[INFO]  [147s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [3, 2, 6]
+[INFO]  [147s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [150s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 4
+[INFO]  [152s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 2
+[INFO]  [152s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 7
+[INFO]  [152s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by 8.7827. Early stopping is reset.
+[INFO]  [152s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 5
+[INFO]  [153s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [154s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [9, 3]
+[INFO]  [154s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [158s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 8
+[INFO]  [159s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [0, 4]
+[INFO]  [159s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [159s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 improved loss by 2.8144. Early stopping is reset.
+[INFO]  [160s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [161s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [161s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [2, 1]
+[INFO]  [163s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [164s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [164s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 4
+[INFO]  [165s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 1
+[INFO]  [166s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [166s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 3
+[INFO]  [167s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [167s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [6, 5]
+[INFO]  [167s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 is already training! Received weights are discarded
+[INFO]  [168s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [168s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [7, 5]
+[INFO]  [168s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 improved loss by 288.0830. Early stopping is reset.
+[INFO]  [169s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 improved loss by 6.1734. Early stopping is reset.
+[INFO]  [170s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [170s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [7, 0]
+[INFO]  [170s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [171s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 9
+[INFO]  [172s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 1
+[INFO]  [172s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [9, 5]
+[INFO]  [172s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [173s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [8, 5]
+[INFO]  [173s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [173s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 5
+[INFO]  [175s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [175s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by 0.0295. Early stopping is reset.
+[INFO]  [177s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 1
+[INFO]  [178s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [178s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 improved loss by 0.0428. Early stopping is reset.
+[INFO]  [179s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [179s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [5, 7]
+[INFO]  [180s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 3
+[INFO]  [182s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [182s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [182s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [0, 2, 6]
+[INFO]  [183s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [183s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 7
+[INFO]  [184s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 0
+[INFO]  [185s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [187s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 6
+[INFO]  [187s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 improved loss by 85.8978. Early stopping is reset.
+[INFO]  [188s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by 0.5169. Early stopping is reset.
+[INFO]  [189s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [3, 9]
+[INFO]  [189s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [190s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 improved loss by 34.7769. Early stopping is reset.
+[INFO]  [192s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [1, 3]
+[INFO]  [192s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [192s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [194s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [194s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [194s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [0, 8]
+[INFO]  [194s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 improved loss by 1.6870. Early stopping is reset.
+[INFO]  [197s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [197s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 2
+[INFO]  [197s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [4, 7]
+[INFO]  [197s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [197s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 improved loss by 1.4655. Early stopping is reset.
+[INFO]  [199s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [199s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [199s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 improved loss by 249.1519. Early stopping is reset.
+[INFO]  [199s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 4
+[INFO]  [200s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [9, 5]
+[INFO]  [200s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [201s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [1, 6]
+[INFO]  [201s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [202s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 0
+[INFO]  [202s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 0.2421. Early stopping is reset.
+[INFO]  [203s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [205s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [205s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [6, 7]
+[INFO]  [205s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 9
+[INFO]  [206s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [206s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [5, 2]
+[INFO]  [206s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 6
+[INFO]  [208s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 0.5533. Early stopping is reset.
+[INFO]  [209s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [210s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [210s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [0, 5]
+[INFO]  [210s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 is already training! Received weights are discarded
+[INFO]  [210s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 7
+[INFO]  [211s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 8
+[INFO]  [214s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 0
+[INFO]  [215s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 5
+[INFO]  [217s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [217s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [3, 4, 6]
+[INFO]  [217s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [218s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [220s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [222s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by 2.8511. Early stopping is reset.
+[INFO]  [222s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 improved loss by 20.8253. Early stopping is reset.
+[INFO]  [223s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [223s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [4, 8]
+[INFO]  [223s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [223s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [223s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by 0.1435. Early stopping is reset.
+[INFO]  [224s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [2, 3]
+[INFO]  [224s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [224s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [9, 2]
+[INFO]  [224s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 is already training! Received weights are discarded
+[INFO]  [225s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 0
+[INFO]  [227s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [228s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 improved loss by 2.8446. Early stopping is reset.
+[INFO]  [228s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 7
+[INFO]  [228s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [228s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [228s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [8, 7]
+[INFO]  [228s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [5, 9]
+[INFO]  [228s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 8
+[INFO]  [229s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 improved loss by 0.8118. Early stopping is reset.
+[INFO]  [230s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [232s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 0.0435. Early stopping is reset.
+[INFO]  [233s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by 0.0448. Early stopping is reset.
+[INFO]  [233s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 5 update without improvement for node 4
+[INFO]  [235s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [235s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [6, 1]
+[INFO]  [235s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 1
+[INFO]  [236s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [238s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [238s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [8, 5]
+[INFO]  [239s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 is already training! Received weights are discarded
+[INFO]  [240s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [7, 0]
+[INFO]  [240s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 6
+[INFO]  [240s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [241s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [241s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 5
+[INFO]  [242s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [7, 5]
+[INFO]  [242s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [243s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 improved loss by 1.5269. Early stopping is reset.
+[INFO]  [245s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [245s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 7
+[INFO]  [247s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 0
+[INFO]  [250s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [250s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 3
+[INFO]  [252s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [3, 6, 4]
+[INFO]  [252s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [252s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [252s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [253s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [253s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [2, 9]
+[INFO]  [253s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 is already training! Received weights are discarded
+[INFO]  [254s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [254s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [7, 4]
+[INFO]  [255s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 improved loss by 3.4841. Early stopping is reset.
+[INFO]  [255s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 is already training! Received weights are discarded
+[INFO]  [255s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [256s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 is already training! Received weights are discarded
+[INFO]  [256s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [5, 9]
+[INFO]  [256s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [3, 2]
+[INFO]  [256s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [257s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 8
+[INFO]  [257s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 2
+[INFO]  [257s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by 1.3232. Early stopping is reset.
+[INFO]  [258s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [4, 0]
+[INFO]  [258s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [258s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by 1.0745. Early stopping is reset.
+[INFO]  [259s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 improved loss by 121.5005. Early stopping is reset.
+[INFO]  [260s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 5
+[INFO]  [261s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 3
+[INFO]  [263s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 improved loss by 20.2286. Early stopping is reset.
+[INFO]  [264s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [267s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [268s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [269s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 1
+[INFO]  [269s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [5, 6]
+[INFO]  [269s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [271s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [5, 2]
+[INFO]  [271s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [272s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 5 update without improvement for node 0
+[INFO]  [273s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [7, 5]
+[INFO]  [273s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [273s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 0.9889. Early stopping is reset.
+[INFO]  [273s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [274s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by 0.3875. Early stopping is reset.
+[INFO]  [275s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 is already training! Received weights are discarded
+[INFO]  [275s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [6, 7]
+[INFO]  [276s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 8
+[INFO]  [278s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 improved loss by 2.3525. Early stopping is reset.
+[INFO]  [280s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [280s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [281s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [282s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [282s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [9, 2]
+[INFO]  [283s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [284s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [284s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [5, 9]
+[INFO]  [284s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 is already training! Received weights are discarded
+[INFO]  [285s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 7
+[INFO]  [285s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 3
+[INFO]  [285s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [285s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 is already training! Received weights are discarded
+[INFO]  [285s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [5, 7]
+[INFO]  [286s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 2
+[INFO]  [287s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [0, 3, 2]
+[INFO]  [287s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [287s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [287s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 9
+[INFO]  [288s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [288s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [2, 3]
+[INFO]  [288s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 improved loss by 0.2531. Early stopping is reset.
+[INFO]  [289s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 6 update without improvement for node 0
+[INFO]  [290s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 4
+[INFO]  [292s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 6
+[INFO]  [292s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 2
+[INFO]  [293s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [293s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [0, 8]
+[INFO]  [293s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 3
+[INFO]  [298s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 4
+[INFO]  [301s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [301s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [303s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [6, 1]
+[INFO]  [303s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [8, 5]
+[INFO]  [303s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [303s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [304s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [7, 5]
+[INFO]  [304s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [304s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [306s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 5
+[INFO]  [308s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 improved loss by 33.4698. Early stopping is reset.
+[INFO]  [308s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by 0.5531. Early stopping is reset.
+[INFO]  [309s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [309s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 7
+[INFO]  [310s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [310s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [6, 0]
+[INFO]  [310s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [311s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [2, 9]
+[INFO]  [311s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [311s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [311s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 is already training! Received weights are discarded
+[INFO]  [312s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 is already training! Received weights are discarded
+[INFO]  [312s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [9, 1]
+[INFO]  [314s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [314s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [4, 7]
+[INFO]  [314s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [314s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 6
+[INFO]  [315s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 7
+[INFO]  [315s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [315s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 2
+[INFO]  [316s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 9
+[INFO]  [316s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 5
+[INFO]  [319s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 is already training! Received weights are discarded
+[INFO]  [319s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [319s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 7 update without improvement for node 0
+[INFO]  [320s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [1, 3]
+[INFO]  [320s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 is already training! Received weights are discarded
+[INFO]  [320s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 5 update without improvement for node 3
+[INFO]  [322s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [322s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [8, 4]
+[INFO]  [322s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 is already training! Received weights are discarded
+[INFO]  [322s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [0, 3, 4]
+[INFO]  [324s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 2
+[INFO]  [327s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 5 update without improvement for node 8
+[INFO]  [332s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [333s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 merged weights! Training started...
+[INFO]  [335s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [335s] - [Node 5] : Receiving model
+[DEBUG]: Node 5 is already training! Received weights are discarded
+[INFO]  [335s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [0, 7]
+[INFO]  [336s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [2, 8]
+[INFO]  [336s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [337s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 1
+[INFO]  [337s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [337s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [6, 5]
+[INFO]  [337s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [338s] - [Node 5] : Completed one update! Saving model
+[DEBUG]: Node 5 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 5
+[DEBUG]: Node 5 becomes inactive
+[INFO]  [339s] - [Node 2] : Receiving model
+[DEBUG]: Node 2 merged weights! Training started...
+[INFO]  [340s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 is already training! Received weights are discarded
+[INFO]  [340s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [340s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [3, 2]
+[INFO]  [340s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 7
+[INFO]  [340s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 is already training! Received weights are discarded
+[INFO]  [341s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 6 update without improvement for node 8
+[INFO]  [342s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 8 update without improvement for node 0
+[INFO]  [342s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 6
+[INFO]  [344s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [344s] - [Node 2] : Completed one update! Saving model
+[DEBUG]: Node 2 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 2
+[DEBUG]: Node 2 becomes inactive
+[INFO]  [344s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [0, 7]
+[INFO]  [345s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [345s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [4, 7]
+[INFO]  [345s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [345s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [1]
+[INFO]  [345s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 9
+[INFO]  [349s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 6
+[INFO]  [349s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [350s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 3 update without improvement for node 4
+[INFO]  [350s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [350s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 1
+[INFO]  [351s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [351s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [352s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 is already training! Received weights are discarded
+[INFO]  [352s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [1]
+[INFO]  [354s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 9 update without improvement for node 0
+[INFO]  [355s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 6 update without improvement for node 3
+[INFO]  [355s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [355s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [0, 4]
+[INFO]  [356s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 7 update without improvement for node 8
+[INFO]  [356s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 5 update without improvement for node 1
+[INFO]  [357s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [4, 0]
+[INFO]  [357s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 is already training! Received weights are discarded
+[INFO]  [360s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 4
+[INFO]  [366s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [367s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 merged weights! Training started...
+[INFO]  [367s] - [Node 4] : Sending models
+[DEBUG]: Node 4 will send weights to the following nodes: [0]
+[INFO]  [369s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [369s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [8]
+[INFO]  [371s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 improved loss by 67.5176. Early stopping is reset.
+[INFO]  [371s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [6, 9]
+[INFO]  [371s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [371s] - [Node 0] : Receiving model
+[DEBUG]: Node 0 is already training! Received weights are discarded
+[INFO]  [371s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [372s] - [Node 0] : Completed one update! Saving model
+[DEBUG]: Node 0 did not improve loss
+[DEBUG]: This was the 10 update without improvement for node 0
+[DEBUG]: Node 0 becomes inactive
+[INFO]  [374s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 improved loss by 5.4513. Early stopping is reset.
+[INFO]  [375s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [9]
+[INFO]  [375s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [376s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 6
+[INFO]  [376s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 7
+[INFO]  [376s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [8, 7]
+[INFO]  [376s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [378s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [378s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [1]
+[INFO]  [379s] - [Node 7] : Receiving model
+[DEBUG]: Node 7 merged weights! Training started...
+[INFO]  [379s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [7]
+[INFO]  [380s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 7 update without improvement for node 3
+[INFO]  [381s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 5 update without improvement for node 4
+[INFO]  [383s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [1]
+[INFO]  [383s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 6 update without improvement for node 1
+[INFO]  [383s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [384s] - [Node 7] : Completed one update! Saving model
+[DEBUG]: Node 7 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 7
+[DEBUG]: Node 7 becomes inactive
+[INFO]  [388s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 7 update without improvement for node 1
+[INFO]  [388s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [4, 6]
+[INFO]  [388s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [392s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [8]
+[INFO]  [392s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 is already training! Received weights are discarded
+[INFO]  [393s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 6 update without improvement for node 4
+[INFO]  [399s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [399s] - [Node 4] : Sending models
+[DEBUG]: Node 4 has no active neighbors! Stop sending models
+[INFO]  [401s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [402s] - [Node 6] : Sending models
+[DEBUG]: Node 6 will send weights to the following nodes: [8]
+[INFO]  [402s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [8]
+[INFO]  [402s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 is already training! Received weights are discarded
+[INFO]  [404s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [9]
+[INFO]  [404s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 4 update without improvement for node 9
+[INFO]  [404s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [405s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [405s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [9, 6]
+[INFO]  [406s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 8
+[INFO]  [409s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 5 update without improvement for node 9
+[INFO]  [410s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 5 update without improvement for node 6
+[INFO]  [411s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [9]
+[INFO]  [411s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [414s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [3]
+[INFO]  [414s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 is already training! Received weights are discarded
+[INFO]  [414s] - [Node 8] : Sending models
+[DEBUG]: Node 8 will send weights to the following nodes: [6]
+[INFO]  [416s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 8 update without improvement for node 1
+[INFO]  [421s] - [Node 8] : Receiving model
+[DEBUG]: Node 8 merged weights! Training started...
+[INFO]  [421s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [421s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [4]
+[INFO]  [423s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [6, 3]
+[INFO]  [423s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [426s] - [Node 8] : Completed one update! Saving model
+[DEBUG]: Node 8 did not improve loss
+[DEBUG]: This was the 2 update without improvement for node 8
+[DEBUG]: Node 8 becomes inactive
+[INFO]  [426s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 7 update without improvement for node 4
+[INFO]  [427s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [4]
+[INFO]  [428s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 improved loss by 3.9461. Early stopping is reset.
+[INFO]  [433s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [9]
+[INFO]  [433s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [433s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 is already training! Received weights are discarded
+[INFO]  [435s] - [Node 6] : Sending models
+[DEBUG]: Node 6 has no active neighbors! Stop sending models
+[INFO]  [438s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 6 update without improvement for node 9
+[INFO]  [439s] - [Node 6] : Receiving model
+[DEBUG]: Node 6 merged weights! Training started...
+[INFO]  [439s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [1]
+[INFO]  [439s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [439s] - [Node 2] : Sending models
+[DEBUG]: Node 2 will send weights to the following nodes: [1, 6]
+[INFO]  [444s] - [Node 6] : Completed one update! Saving model
+[DEBUG]: Node 6 did not improve loss
+[DEBUG]: This was the 1 update without improvement for node 6
+[DEBUG]: Node 6 becomes inactive
+[INFO]  [444s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 did not improve loss
+[DEBUG]: This was the 7 update without improvement for node 9
+[INFO]  [446s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [1]
+[INFO]  [446s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [448s] - [Node 8] : Sending models
+[DEBUG]: Node 8 has no active neighbors! Stop sending models
+[INFO]  [451s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 is already training! Received weights are discarded
+[INFO]  [451s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 8 update without improvement for node 3
+[INFO]  [456s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [4]
+[INFO]  [456s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [458s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [3]
+[INFO]  [458s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [4]
+[INFO]  [458s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 is already training! Received weights are discarded
+[INFO]  [461s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 8 update without improvement for node 4
+[INFO]  [462s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [3]
+[INFO]  [462s] - [Node 9] : Receiving model
+[DEBUG]: Node 9 merged weights! Training started...
+[INFO]  [467s] - [Node 9] : Completed one update! Saving model
+[DEBUG]: Node 9 improved loss by 0.0009. Early stopping is reset.
+[DEBUG]: Node 9 becomes inactive
+[INFO]  [468s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 merged weights! Training started...
+[INFO]  [472s] - [Node 3] : Sending models
+[DEBUG]: Node 3 will send weights to the following nodes: [1]
+[INFO]  [472s] - [Node 1] : Receiving model
+[DEBUG]: Node 1 is already training! Received weights are discarded
+[INFO]  [473s] - [Node 1] : Completed one update! Saving model
+[DEBUG]: Node 1 did not improve loss
+[DEBUG]: This was the 9 update without improvement for node 1
+[DEBUG]: Node 1 becomes inactive
+[INFO]  [473s] - [Node 2] : Sending models
+[DEBUG]: Node 2 has no active neighbors! Stop sending models
+[INFO]  [477s] - [Node 9] : Sending models
+[DEBUG]: Node 9 will send weights to the following nodes: [3]
+[INFO]  [486s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [3]
+[INFO]  [486s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [489s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [4]
+[INFO]  [489s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [491s] - [Node 7] : Sending models
+[DEBUG]: Node 7 will send weights to the following nodes: [4]
+[INFO]  [491s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 9 update without improvement for node 3
+[INFO]  [491s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 is already training! Received weights are discarded
+[INFO]  [494s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 9 update without improvement for node 4
+[INFO]  [497s] - [Node 1] : Sending models
+[DEBUG]: Node 1 will send weights to the following nodes: [3]
+[INFO]  [497s] - [Node 3] : Receiving model
+[DEBUG]: Node 3 merged weights! Training started...
+[INFO]  [502s] - [Node 3] : Completed one update! Saving model
+[DEBUG]: Node 3 did not improve loss
+[DEBUG]: This was the 10 update without improvement for node 3
+[DEBUG]: Node 3 becomes inactive
+[INFO]  [505s] - [Node 3] : Sending models
+[DEBUG]: Node 3 has no active neighbors! Stop sending models
+[INFO]  [509s] - [Node 9] : Sending models
+[DEBUG]: Node 9 has no active neighbors! Stop sending models
+[INFO]  [514s] - [Node 5] : Sending models
+[DEBUG]: Node 5 will send weights to the following nodes: [4]
+[INFO]  [520s] - [Node 0] : Sending models
+[DEBUG]: Node 0 will send weights to the following nodes: [4]
+[INFO]  [520s] - [Node 4] : Receiving model
+[DEBUG]: Node 4 merged weights! Training started...
+[INFO]  [525s] - [Node 4] : Completed one update! Saving model
+[DEBUG]: Node 4 did not improve loss
+[DEBUG]: This was the 10 update without improvement for node 4
+[DEBUG]: Node 4 becomes inactive
