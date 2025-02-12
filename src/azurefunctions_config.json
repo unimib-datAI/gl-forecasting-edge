@@ -1,0 +1,34 @@
+{
+  "workspace_dir": "experiments/test",
+  "n_nodes": 1,
+  "log_level": 2,
+  "training": {
+    "perc_sent_weights": 1,
+    "target_probability": 0.5,
+    "models_folder": "models/",
+    "batch_size": 64,
+    "shuffle_batch": true,
+    "input_timesteps": 4,
+    "output_timesteps": 1,
+    "n_input_features": 14,
+    "n_output_vars": 1,
+    "merge_strategy": "simple_avg",
+    "stop_criterion": "fixed_updates",
+    "num_merged_models": 1,
+    "epochs_per_update": 10,
+    "finetuning_epochs": 2,
+    "fixed_updates": 30,
+    "patience": 5,
+    "min_delta": 0,
+    "serialize_optimizer": false
+  },
+  "history": {
+    "eval_test": true,
+    "freq": 5
+  },
+  "data_preparation": {
+    "time_window": 5,
+    "test_perc": 0.3,
+    "val_perc_on_train": 0.1
+  }
+}
