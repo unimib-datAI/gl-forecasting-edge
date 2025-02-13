@@ -1,11 +1,12 @@
 from utils.model_creators import create_LSTM
 from gossiplearning.config import Config
 
-from azurefunctions_utils import load_dataset, save_dataset
+from azurefunctions_utils import load_dataset
 
 from keras.api.callbacks import ModelCheckpoint
 from tensorflow.python.keras import Model
 from matplotlib import colors as mcolors
+from keras.api.models import load_model
 import matplotlib.pyplot as plt
 from typing import Tuple
 import pandas as pd
@@ -30,9 +31,10 @@ def parse_arguments() -> argparse.Namespace:
     required=True
   )
   parser.add_argument(
-    "-m", "--mode", 
-    help="Training mode", 
+    "-m", "--modes", 
+    help="Training mode(s)", 
     type = str,
+    nargs = "+",
     choices = ["centralized", "local"],
     required=True
   )
@@ -55,8 +57,23 @@ def parse_arguments() -> argparse.Namespace:
     nargs="+",
     default=0
   )
+  parser.add_argument(
+    "--plot_single_history", 
+    help="True to plot the history of each model", 
+    default=False,
+    action="store_true"
+  )
   args, _ = parser.parse_known_args()
   return args
+
+
+def already_trained(
+    output_folder: str, model_keyword: str
+  ) -> Tuple[bool, str, str]:
+  history_file = os.path.join(output_folder, f"{model_keyword}_history.csv")
+  model_file = os.path.join(output_folder, f"{model_keyword}.h5")
+  at = os.path.exists(history_file) and os.path.exists(model_file)
+  return at, history_file, model_file
 
 
 def compute_and_plot_predictions(
@@ -151,6 +168,119 @@ def plot_history(history_df: pd.DataFrame, output_folder: str, node: str):
   plt.close()
 
 
+def plot_multinode_history(
+    histories: pd.DataFrame, output_folder: str, keyword: str
+  ):
+  colors = list(mcolors.TABLEAU_COLORS.values())
+  centralized_exists = "centralized" in histories["node"].unique()
+  _, axs = plt.subplots(nrows = 2, ncols = 2, figsize = (20,8))
+  for node, history_df in histories.groupby("node"):
+    color = "k" if node == "centralized" else (
+      colors[0] if centralized_exists else colors[int(node)]
+    )
+    linewidth = 2 if node == "centralized" else 1
+    linestyle = "solid" if node == "centralized" else "dashed"
+    label = node
+    history_df.plot(
+      x = "iter",
+      y = "mape", 
+      ax = axs[0,0],
+      label = label,
+      grid = True,
+      color = color,
+      linewidth = linewidth,
+      linestyle = linestyle
+    )
+    history_df.plot(
+      x = "iter",
+      y = "val_mape", 
+      ax = axs[0,1],
+      label = label,
+      grid = True,
+      color = color,
+      linewidth = linewidth,
+      linestyle = linestyle
+    )
+    history_df.plot(
+      x = "iter",
+      y = "mse", 
+      ax = axs[1,0],
+      label = label,
+      grid = True,
+      color = color,
+      linewidth = linewidth,
+      linestyle = linestyle
+    )
+    history_df.plot(
+      x = "iter",
+      y = "val_mse", 
+      ax = axs[1,1],
+      label = label,
+      grid = True,
+      color = color,
+      linewidth = linewidth,
+      linestyle = linestyle
+    )
+  # plot average over local models
+  local = histories[histories["node"]!="centralized"].groupby("iter").mean(
+    numeric_only = True
+  )
+  color = colors[0] if "centralized" in histories["node"].unique() else "r"
+  linewidth = 2
+  linestyle = "solid"
+  local.plot(
+    y = "mape", 
+    ax = axs[0,0],
+    label = "local average",
+    grid = True,
+    color = color,
+    linewidth = linewidth,
+    linestyle = linestyle
+  )
+  local.plot(
+    y = "val_mape", 
+    ax = axs[0,1],
+    label = "local average",
+    grid = True,
+    color = color,
+    linewidth = linewidth,
+    linestyle = linestyle
+  )
+  local.plot(
+    y = "mse", 
+    ax = axs[1,0],
+    label = "local average",
+    grid = True,
+    color = color,
+    linewidth = linewidth,
+    linestyle = linestyle
+  )
+  local.plot(
+    y = "val_mse", 
+    ax = axs[1,1],
+    label = "local average",
+    grid = True,
+    color = color,
+    linewidth = linewidth,
+    linestyle = linestyle
+  )
+  # axis properties
+  axs[0,0].set_ylabel("MAPE", fontsize = 14)
+  axs[1,0].set_ylabel("MSE", fontsize = 14)
+  axs[0,0].set_title("Training History", fontsize = 14)
+  axs[0,1].set_title("Validation History", fontsize = 14)
+  axs[0,1].legend(
+    fontsize = 14, loc = "center left", bbox_to_anchor = (1, 0)
+  )
+  plt.savefig(
+    os.path.join(output_folder, f"{keyword}_history.png"),
+    dpi = 300,
+    format = "png",
+    bbox_inches = "tight"
+  )
+  plt.close()
+
+
 def prepare_training(config_file: str) -> Tuple[Config, functools.partial]:
   # load and validate configuration
   config = None
@@ -180,7 +310,11 @@ def train_one_model(
     mode = "min",
   )
   # extract data
-  (X_train, Y_train), (X_val, Y_val), (X_test, Y_test) = dataset
+  train_data, validation_data, _ = dataset
+  X_train = train_data[0]
+  Y_train = train_data[1]
+  X_val = validation_data[0]
+  Y_val = validation_data[1]
   # train
   history = model.fit(
     X_train,
@@ -206,29 +340,34 @@ def train_one_model(
 def train_local_models(
     config: Config, 
     model_creator: functools.partial, 
-    prepared_nodes_dataset: dict, 
-    output_folder: str
+    nodes_dataset: dict, 
+    output_folder: str,
+    plot_single_history: bool
   ) -> Tuple[dict, pd.DataFrame]:
   # loop over nodes
   models = {}
   histories = pd.DataFrame()
-  for node in prepared_nodes_dataset:
+  for node in nodes_dataset:
     model, history = train_one_model(
       config = config, 
       model_creator = model_creator, 
-      dataset = prepared_nodes_dataset[node], 
+      dataset = nodes_dataset[node], 
       checkpoint_path = os.path.join(output_folder, f"{node}_single.h5")
     )
     # save model
     models[node] = model
     # plot and save history
     history_df = pd.DataFrame(history)
-    plot_history(history_df, output_folder, node)
-    history_df.to_csv(os.path.join(output_folder, f"{node}_history.csv"))
+    history_df["iter"] = history_df.index
     history_df["node"] = [node] * len(history_df)
+    history_df.to_csv(
+      os.path.join(output_folder, f"{node}_single_history.csv"), index = False
+    )
+    if plot_single_history:
+      plot_history(history_df, output_folder, f"{node}_single")
     histories = pd.concat([histories, history_df], ignore_index = True)
     # compute, plot and save predictions
-    (X_train, Y_train), (X_val, Y_val), (X_test, Y_test) = prepared_nodes_dataset[
+    (X_train, Y_train), (X_val, Y_val), (X_test, Y_test) = nodes_dataset[
       node
     ]
     Y_train_pred, Y_val_pred, Y_test_pred = compute_and_plot_predictions(
@@ -237,14 +376,16 @@ def train_local_models(
       X_test, Y_test, 
       models[node], 
       output_folder, 
-      node
+      f"{node}_single"
     )
     predictions_json = {
       "train": Y_train_pred.tolist(),
       "val": Y_val_pred.tolist(),
       "test": Y_test_pred.tolist()
     }
-    with open(os.path.join(output_folder, f"{node}_pred.json"), "w") as ost:
+    with open(
+        os.path.join(output_folder, f"{node}_single_pred.json"), "w"
+      ) as ost:
       ost.write(json.dumps(predictions_json, indent = 2))
   return models, histories
 
@@ -253,26 +394,33 @@ def train_centralized_model(
     config: Config, 
     model_creator: functools.partial, 
     centralized_dataset: list, 
-    output_folder: str
+    output_folder: str,
+    plot_single_history: bool
   ) -> Tuple[dict, pd.DataFrame]:
-  # load data
-  train_data, val_data, test_data = centralized_dataset
   # train
   model, history = train_one_model(
     config = config,
     model_creator = model_creator,
-    dataset = [*train_data, *val_data, *test_data],
+    dataset = centralized_dataset,
     checkpoint_path = os.path.join(output_folder, "centralized.h5")
   )
   # plot and save history
   history_df = pd.DataFrame(history)
-  plot_history(history_df, output_folder, "centralized")
-  history_df.to_csv(os.path.join(output_folder, f"centralized_history.csv"))
+  history_df["node"] = ["centralized"] * len(history_df)
+  history_df["iter"] = history_df.index
+  history_df.to_csv(
+    os.path.join(output_folder, "centralized_history.csv"), index = False
+  )
+  if plot_single_history:
+    plot_history(history_df, output_folder, "centralized")
   # compute, plot and save predictions
   Y_train_pred, Y_val_pred, Y_test_pred = compute_and_plot_predictions(
-    train_data[0], train_data[1],
-    val_data[0], val_data[1],
-    test_data[0], test_data[1],
+    centralized_dataset[0][0], # train
+    centralized_dataset[0][1],
+    centralized_dataset[1][0], # validation
+    centralized_dataset[1][1],
+    centralized_dataset[2][0], # test
+    centralized_dataset[2][1],
     model,
     output_folder, "centralized"
   )
@@ -281,7 +429,7 @@ def train_centralized_model(
     "val": Y_val_pred.tolist(),
     "test": Y_test_pred.tolist()
   }
-  with open(os.path.join(output_folder, f"centralized_pred.json"), "w") as ost:
+  with open(os.path.join(output_folder, "centralized_pred.json"), "w") as ost:
     ost.write(json.dumps(predictions_json, indent = 2))
   # return
   return model, history_df
@@ -292,7 +440,8 @@ def run_single_training_experiment(
     simulation: int,
     config: Config, 
     model_creator: functools.partial, 
-    mode: str = "centralized"
+    mode: str = "centralized",
+    plot_single_history: bool = False
   ) -> Tuple[dict, pd.DataFrame]:
   # build name of data folder
   data_folder = os.path.join(base_folder, str(simulation))
@@ -304,74 +453,63 @@ def run_single_training_experiment(
   histories = pd.DataFrame()
   if mode == "centralized":
     # centralized training
-    dataset = load_dataset(data_folder, "centralized")
-    models["centralized"], history_df = train_centralized_model(
-      config = config,
-      model_creator = model_creator,
-      centralized_dataset = dataset,
-      output_folder = output_folder
+    is_already_trained, history_file, model_file = already_trained(
+      output_folder, "centralized"
     )
-    history_df["node"] = "centralized"
+    history_df = None
+    if not is_already_trained:
+      dataset = load_dataset(data_folder, "centralized")
+      models["centralized"], history_df = train_centralized_model(
+        config = config,
+        model_creator = model_creator,
+        centralized_dataset = dataset,
+        output_folder = output_folder,
+        plot_single_history = plot_single_history
+      )
+    else:
+      print(f"  {mode} results for simulation {simulation} already exist!")
+      models["centralized"] = None#load_model(model_file)
+      history_df = pd.read_csv(history_file)
     histories = pd.concat([histories, history_df], ignore_index = True)
   elif mode == "local":
     # local training for all nodes
-    dataset = {
-      node: load_dataset(data_folder, node) for node in range(config.n_nodes)
-    }
-    models, histories = train_local_models(
-      config = config,
-      model_creator = model_creator,
-      prepared_nodes_dataset = dataset,
-      output_folder = output_folder
-    )
+    dataset = {}
+    for node in range(config.n_nodes):
+      is_already_trained, history_file, model_file = already_trained(
+        output_folder, f"{node}_single"
+      )
+      if not is_already_trained:
+        dataset[node] = load_dataset(data_folder, node)
+      else:
+        print(
+          f"  {mode}-{node} results for simulation {simulation} already exist!"
+        )
+        models[node] = None#load_model(model_file)
+        history_df = pd.read_csv(history_file)
+        histories = pd.concat([histories, history_df], ignore_index = True)
+    if len(dataset) > 0:
+      l_models, l_histories = train_local_models(
+        config = config,
+        model_creator = model_creator,
+        nodes_dataset = dataset,
+        output_folder = output_folder,
+        plot_single_history = plot_single_history
+      )
+      models = {**models, **l_models}
+      histories = pd.concat([histories, l_histories], ignore_index = True)
     # plot history of different nodes
-    _, axs = plt.subplots(nrows = 2, ncols = 2, figsize = (20,8))
-    for node, history_df in histories.groupby("node"):
-      to_plot = history_df.reset_index()
-      to_plot["mape"].plot(
-        ax = axs[0,0],
-        label = node,
-        grid = True
-      )
-      to_plot["val_mape"].plot(
-        ax = axs[0,1],
-        label = node,
-        legend = False,
-        grid = True
-      )
-      to_plot["mse"].plot(
-        ax = axs[1,0],
-        label = node,
-        legend = False,
-        grid = True
-      )
-      to_plot["val_mse"].plot(
-        ax = axs[1,1],
-        label = node,
-        legend = False,
-        grid = True
-      )
-    axs[0,0].set_ylabel("MAPE", fontsize = 14)
-    axs[1,0].set_ylabel("MSE", fontsize = 14)
-    axs[0,0].set_title("Training History", fontsize = 14)
-    axs[0,1].set_title("Validation History", fontsize = 14)
-    plt.savefig(
-      os.path.join(output_folder, "history_local.png"),
-      dpi = 300,
-      format = "png",
-      bbox_inches = "tight"
-    )
-    plt.close()
+    plot_multinode_history(histories, output_folder, "local")
   return models, histories
 
 
 def train(
     config_file: str, 
     base_folder: str,
-    mode: str,
+    modes: str,
     seed: int,
-    simulations: list
-  ) -> list:
+    simulations: list,
+    plot_single_history: bool
+  ) -> Tuple[dict, pd.DataFrame]:
   # load configuration and define model creator
   config, model_creator = prepare_training(config_file)
   # build base i/o folder
@@ -383,17 +521,30 @@ def train(
     f"azurefunctions-dataset2019/{n}n_k{k}_{t}min/seed{seed}"
   )
   # loop over simulations
-  output_folders = []
+  models = {}
+  histories = pd.DataFrame()
   for simulation in simulations:
-    output_folder = run_single_training_experiment(
-      base_folder = io_folder,
-      simulation = simulation,
-      config = config,
-      model_creator = model_creator,
-      mode = mode
-    )
-    output_folders.append(output_folder)
-  return output_folders
+    sim_models = {}
+    sim_histories = pd.DataFrame()
+    for mode in modes:
+      mode_models, mode_histories = run_single_training_experiment(
+        base_folder = io_folder,
+        simulation = simulation,
+        config = config,
+        model_creator = model_creator,
+        mode = mode,
+        plot_single_history = plot_single_history
+      )
+      mode_histories["mode"] = [mode] * len(mode_histories)
+      # save
+      sim_models = {**sim_models, **mode_models}
+      sim_histories = pd.concat(
+        [sim_histories, mode_histories], 
+        ignore_index = True
+      )
+    # plot simulation history
+    plot_multinode_history(sim_histories, io_folder, f"{simulation}_all")
+  return models, histories
 
 
 if __name__ == "__main__":
@@ -401,10 +552,20 @@ if __name__ == "__main__":
   args = parse_arguments()
   config_file = args.config_file
   base_folder = args.base_folder
-  mode = args.mode
+  modes = args.modes
   seed = args.seed
   simulations = args.simulations
+  plot_single_history = args.plot_single_history
+  # config_file = "azurefunctions_config.json"
+  # base_folder = "../experiments"
+  # modes = ["local", "centralized"]
+  # seed = 4850
+  # simulations = 0
+  if not isinstance(modes, list):
+    modes = [modes]
   if not isinstance(simulations, list) and simulations != "all":
     simulations = [simulations]
   # run
-  _ = train(config_file, base_folder, mode, seed, simulations)
+  _ = train(
+    config_file, base_folder, modes, seed, simulations, plot_single_history
+  )
