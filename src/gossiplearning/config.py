@@ -55,7 +55,6 @@ class TrainingConfig(BaseModel):
     """
     Configuration related to training and gossip learning protocol parameters.
     """
-
     patience: int = Field(
         ...,
         ge=1,
@@ -118,6 +117,12 @@ class TrainingConfig(BaseModel):
     models_folder: str = Field(
         ..., description="The path of the folder where models should be saved"
     )
+    input_timesteps: int = Field(
+        ..., description="The number of input timesteps"
+    )
+    output_timesteps: int = Field(
+        1, description="The number of output timesteps"
+    )
     n_input_features: int = Field(
         ..., description="The number of input features per timestep"
     )
@@ -159,6 +164,28 @@ class TrainingConfig(BaseModel):
     )
 
 
+class DataPreparationConfig(BaseModel):
+    """
+    Configuration related to data preparation.
+    """
+    time_window: int = Field(
+        ...,
+        description="Time window",
+    )
+    test_perc: float = Field(
+        ...,
+        gt=0,
+        le=1,
+        description="Percentage of data to be used for testing",
+    )
+    val_perc_on_train: float = Field(
+        ...,
+        gt=0,
+        le=1,
+        description="Percentage of training data to be used for validation",
+    )
+
+
 class HistoryConfig(BaseModel):
     eval_test: bool = Field(
         False,
@@ -175,8 +202,10 @@ class Config(BaseModel):
     """
 
     n_nodes: int = Field(..., description="Number of nodes")
+    connectivity: int = Field(..., description="Nodes connectivity")
     nodes: tuple[NodeConfig, ...] = Field(())
     training: TrainingConfig = Field(...)
+    data_preparation: DataPreparationConfig = Field(...)
     log_level: LogLevel = Field("INFO", description="The simulator log level")
     workspace_dir: Path = Field(..., description="The workspace directory")
     history: HistoryConfig = Field(..., description="History config")
