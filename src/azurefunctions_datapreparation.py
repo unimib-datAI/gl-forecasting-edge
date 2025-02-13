@@ -91,24 +91,44 @@ def assign_nearest_tower(
 def build_nodes_dataframe(
     taxis_df: pd.DataFrame, all_data: pd.DataFrame
   ) -> pd.DataFrame:
+  # define time boundaries
+  day_min = int(all_data["day"].min())
+  day_max = int(all_data["day"].max()) + 1
+  hour_min = int(all_data["hour"].min())
+  hour_max = int(all_data["hour"].max()) + 1
+  # build dataframe
   nodes_dataset = {}
   for node, taxi_data in taxis_df.groupby("tower"):
     node_data = {"req": [], "day": [], "hour": []}
-    for (day, hour), taxi_info in taxi_data.groupby(["day", "hour"]):
-      # sum all requests in a given time window
-      all_req = int(
-        all_data[
+    for day in range(day_min, day_max):
+      for hour in range(hour_min, hour_max):
+        taxi_info = taxi_data[
           (
-            all_data["day"] == day
+            taxi_data["day"] == day
           ) & (
-            all_data["hour"] == hour
+            taxi_data["hour"] == hour
           )
-        ].dropna().set_index("tid").loc[taxi_info["taxi_id"]].sum()["req"]
-      ) + 1
-      # add to dataset
-      node_data["req"].append(all_req)
-      node_data["day"].append(int(day))
-      node_data["hour"].append(int(hour))
+        ]
+        if len(taxi_info) > 0:
+          # sum all requests in a given time window (+1 to avoid division by 0
+          # when computing errors)
+          all_req = int(
+            all_data[
+              (
+                all_data["day"] == day
+              ) & (
+                all_data["hour"] == hour
+              )
+            ].dropna().set_index("tid").loc[taxi_info["taxi_id"]].sum()["req"]
+          ) + 1
+        else:
+          # if there are no requests in a given time window, set 1 to avoid 
+          # division by 0 when computing errors
+          all_req = 1
+        # add to dataset
+        node_data["req"].append(all_req)
+        node_data["day"].append(int(day))
+        node_data["hour"].append(int(hour))
     # merge
     nodes_dataset[node] = pd.DataFrame(node_data)
   return nodes_dataset
@@ -265,6 +285,8 @@ def prepare_data(
     test_datasets = []
     for node, node_data in nodes_dataset.items():
       print(f"    node {node}")
+      # plot whole node dataset
+      plot_requests_by_day(node_data, output_folder, node)
       # encode time
       time_encoded_data = encode_time(node_data)
       # encode sequences
@@ -301,8 +323,6 @@ def prepare_data(
       train_datasets.append((X_train, Y_train))
       val_datasets.append((X_val, Y_val))
       test_datasets.append((X_test, Y_test))
-      # plot whole node dataset
-      plot_requests_by_day(node_data, output_folder, node)
     print("...done")
     # aggregate and save centralized dataset
     print("Aggregate and save centralized dataset")
