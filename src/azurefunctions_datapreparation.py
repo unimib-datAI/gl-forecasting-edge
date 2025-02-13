@@ -4,6 +4,8 @@ from gossiplearning.config import Config, TrainingConfig
 
 from azurefunctions_utils import encode_time, save_dataset
 
+from matplotlib import colors as mcolors
+import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import argparse
@@ -16,7 +18,7 @@ def parse_arguments() -> argparse.Namespace:
   Parse input arguments
   """
   parser = argparse.ArgumentParser(
-    description="Load and compare pre-processed results"
+    description="Prepare dataset(s) to train models for Azure function traces"
   )
   parser.add_argument(
     "-i", "--data_folder", 
@@ -164,6 +166,41 @@ def map_taxis_to_owners(
   return owner_taxi_mapping
 
 
+def plot_requests_by_day(
+    singlenode_req: pd.DataFrame, output_folder: str, node: int
+  ):
+  colors = list(mcolors.TABLEAU_COLORS.values())[:7] * 2
+  _, axs = plt.subplots(
+    nrows = 1,
+    ncols = 2,
+    figsize = (20, 8)
+  )
+  for day, df1 in singlenode_req.groupby("day"):
+    to_plot = df1.reset_index()
+    to_plot.plot(
+      x = "hour",
+      y = "req",
+      ax = axs[0],
+      label = day,
+      color = colors[day - 1]
+    )
+    to_plot["time"] = to_plot["hour"] + day * to_plot["hour"].max()
+    to_plot.plot(
+      x = "time",
+      y = "req",
+      ax = axs[1],
+      label = day,
+      color = colors[day - 1]
+    )
+  # save
+  plt.savefig(
+    os.path.join(output_folder, f"{node}_data.png"),
+    dpi = 300,
+    format = "png",
+    bbox_inches = "tight"
+  )
+
+
 def prepare_data(
     base_data_folder: str,
     t: int, 
@@ -264,6 +301,8 @@ def prepare_data(
       train_datasets.append((X_train, Y_train))
       val_datasets.append((X_val, Y_val))
       test_datasets.append((X_test, Y_test))
+      # plot whole node dataset
+      plot_requests_by_day(node_data, output_folder, node)
     print("...done")
     # aggregate and save centralized dataset
     print("Aggregate and save centralized dataset")
