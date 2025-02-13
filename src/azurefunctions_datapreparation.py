@@ -39,6 +39,7 @@ def parse_arguments() -> argparse.Namespace:
   parser.add_argument(
     "--seed", 
     help="Seed for random number generation", 
+    type=int,
     default=4850
   )
   parser.add_argument(
@@ -183,38 +184,50 @@ def prepare_data(
   if not os.path.exists(output_folder):
     os.makedirs(output_folder)
     # load function traces
+    print("Load functions traces")
     function_traces_file = os.path.join(
       base_data_folder, 
       f"azurefunctions-dataset2019/by_owner_flat_invocations_{t}min.csv"
     )
     all_data = pd.read_csv(function_traces_file)
+    print("...done")
     # load taxi traces
+    print("Load taxi traces")
     full_taxi_path = pd.read_csv(
       os.path.join(base_data_folder, "full_taxi_path.csv")
     )
     taxis_df = build_taxis_dataframe(full_taxi_path, t, "minute")
+    print("...done")
     # load network and assign cells (thus, taxis) to nodes
+    print("Load towers and assign cells to nodes")
     towers_file = os.path.join(
       base_data_folder, 
       f"networks/porto_{n}n_{k}k/seed{seed}/{simulation}/towers.csv"
     )
     towers = pd.read_csv(towers_file)
     taxis_df = assign_nearest_tower(
-      os.path.join(base_data_folder, "BBox.txt"), taxis_df, towers
+      "../assets/BBox_Porto.txt", taxis_df, towers
     )
+    print("...done")
     # build taxi-owner identification
+    print("Build taxi-owner identification")
     owner_taxi_mapping = map_taxis_to_owners(
       taxis_df["taxi_id"].unique(), list(all_data["fid"].unique()), seed
     )
     all_data["tid"] = [owner_taxi_mapping.get(o) for o in all_data["fid"]]
+    print("...done")
     # build nodes dataset
+    print("Build nodes dataset")
     nodes_dataset = build_nodes_dataframe(taxis_df, all_data)
+    print("...done")
     # perform encoding and random train/val/test split
+    print("Perform encoding and random train/val/test split")
     prepared_nodes_dataset = {}
     train_datasets = []
     val_datasets = []
     test_datasets = []
     for node, node_data in nodes_dataset.items():
+      print(f"    node {node}")
       # encode time
       time_encoded_data = encode_time(node_data)
       # encode sequences
@@ -251,7 +264,9 @@ def prepare_data(
       train_datasets.append((X_train, Y_train))
       val_datasets.append((X_val, Y_val))
       test_datasets.append((X_test, Y_test))
+    print("...done")
     # aggregate and save centralized dataset
+    print("Aggregate and save centralized dataset")
     centralized_train_data = aggregate_datasets(train_datasets)
     centralized_val_data = aggregate_datasets(val_datasets)
     centralized_test_data = aggregate_datasets(test_datasets)
@@ -262,6 +277,7 @@ def prepare_data(
       output_folder,
       "centralized"
     )
+    print("...done")
   else:
     print(f"WARNING: Output folder {output_folder} already exists!")
   return output_folder
