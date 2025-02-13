@@ -283,19 +283,27 @@ def prepare_data(
     train_datasets = []
     val_datasets = []
     test_datasets = []
+    n_auxiliary_features = None
     for node, node_data in nodes_dataset.items():
       print(f"    node {node}")
       # plot whole node dataset
       plot_requests_by_day(node_data, output_folder, node)
       # encode time
       time_encoded_data = encode_time(node_data)
+      naf = len(time_encoded_data.columns) - 1
+      if n_auxiliary_features is None:
+        n_auxiliary_features = naf
+      elif n_auxiliary_features != naf:
+        raise RuntimeError(
+          f"Inconsistent number of features: {n_auxiliary_features} != {naf}"
+        )
       # encode sequences
       seq_encoded_X, seq_encoded_Y = encode_sequences_for_training(
         time_encoded_data, 
         training_config.input_timesteps, 
         training_config.output_timesteps, 
         training_config.n_output_vars, 
-        training_config.n_input_features - 1
+        n_auxiliary_features
       )
       # split
       X_train, Y_train, X_val, Y_val, X_test, Y_test = train_val_test_split(
@@ -323,7 +331,7 @@ def prepare_data(
       train_datasets.append((X_train, Y_train))
       val_datasets.append((X_val, Y_val))
       test_datasets.append((X_test, Y_test))
-    print("...done")
+    print(f"...done; n_auxiliary_features = {n_auxiliary_features}")
     # aggregate and save centralized dataset
     print("Aggregate and save centralized dataset")
     centralized_train_data = aggregate_datasets(train_datasets)
