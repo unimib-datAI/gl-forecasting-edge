@@ -6,7 +6,7 @@ from typing import Optional, Sequence
 
 import networkx as nx
 import numpy as np
-from keras.saving.saving_api import load_model
+from keras.api.saving import load_model
 from matplotlib import pyplot as plt
 
 from gossiplearning import History
