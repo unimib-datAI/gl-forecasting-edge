@@ -1,6 +1,8 @@
 {
   "workspace_dir": "experiments/test",
-  "n_nodes": 1,
+  "n_simulations": 10,
+  "n_nodes": 10,
+  "connectivity": 3,
   "log_level": 2,
   "training": {
     "perc_sent_weights": 1,
@@ -10,7 +12,7 @@
     "shuffle_batch": true,
     "input_timesteps": 4,
     "output_timesteps": 1,
-    "n_input_features": 14,
+    "n_input_features": 12,
     "n_output_vars": 1,
     "merge_strategy": "simple_avg",
     "stop_criterion": "fixed_updates",
@@ -18,7 +20,7 @@
     "epochs_per_update": 10,
     "finetuning_epochs": 2,
     "fixed_updates": 30,
-    "patience": 5,
+    "patience": 10,
     "min_delta": 0,
     "serialize_optimizer": false
   },
@@ -27,7 +29,7 @@
     "freq": 5
   },
   "data_preparation": {
-    "time_window": 5,
+    "time_window": 15,
     "test_perc": 0.3,
     "val_perc_on_train": 0.1
   }
