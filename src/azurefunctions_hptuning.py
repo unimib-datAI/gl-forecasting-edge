@@ -182,7 +182,7 @@ def run(
   train, val, _ = load_dataset(
     os.path.join(
       base_folder,
-      f"azurefunctions-dataset2019/{n}n_{k}3_{t}min/seed{seed}/{simulation}"
+      f"azurefunctions-dataset2019/{n}n_{k}k_{t}min/seed{seed}/{simulation}"
     ), 
     "centralized"
   )
