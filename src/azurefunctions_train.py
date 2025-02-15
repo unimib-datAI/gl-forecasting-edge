@@ -518,7 +518,7 @@ def train(
   t = config.data_preparation.time_window
   io_folder = os.path.join(
     base_folder,
-    f"azurefunctions-dataset2019/{n}n_k{k}_{t}min/seed{seed}"
+    f"azurefunctions-dataset2019/{n}n_{k}k_{t}min/seed{seed}"
   )
   # loop over simulations
   models = {}

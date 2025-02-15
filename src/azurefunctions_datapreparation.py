@@ -236,7 +236,7 @@ def prepare_data(
   # build output folder
   output_folder = os.path.join(
     base_output_folder,
-    f"azurefunctions-dataset2019/{n}n_k{k}_{t}min/seed{seed}/{simulation}"
+    f"azurefunctions-dataset2019/{n}n_{k}k_{t}min/seed{seed}/{simulation}"
   )
   if not os.path.exists(output_folder):
     os.makedirs(output_folder)
