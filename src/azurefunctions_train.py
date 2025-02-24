@@ -22,7 +22,7 @@ def parse_arguments() -> argparse.Namespace:
   Parse input arguments
   """
   parser = argparse.ArgumentParser(
-    description="Prepare dataset(s) to train models for Azure function traces"
+    description="Train models for Azure function traces"
   )
   parser.add_argument(
     "-f", "--base_folder", 
@@ -448,7 +448,7 @@ def run_single_training_experiment(
       )
     else:
       print(f"  {mode} results for simulation {simulation} already exist!")
-      models["centralized"] = None#load_model(model_file)
+      models["centralized"] = load_model(model_file)
       history_df = pd.read_csv(history_file)
     histories = pd.concat([histories, history_df], ignore_index = True)
   elif mode == "local":
