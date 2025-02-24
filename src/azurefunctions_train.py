@@ -77,74 +77,53 @@ def already_trained(
 
 
 def compute_and_plot_predictions(
-    X_train: np.ndarray, 
-    Y_train: np.ndarray, 
-    X_val: np.ndarray, 
-    Y_val: np.ndarray, 
-    X_test: np.ndarray, 
-    Y_test: np.ndarray, 
+    X_Y_data: dict, 
     model,
     output_folder: str,
     node: str
-  ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-  Y_train_pred = model.predict(X_train)
-  Y_val_pred = model.predict(X_val)
-  Y_test_pred = model.predict(X_test)
+  ) -> dict:
+  # compute predictions
+  predictions = {}
+  for data_key, (X_data, _) in X_Y_data.items():
+    predictions[data_key] = model.predict(X_data)
+  # plot
+  nrows = len(X_Y_data)
   _, axs = plt.subplots(
-    nrows = 3, 
+    nrows = nrows, 
     ncols = 1,
-    figsize = (20,8)
+    figsize = (7 * nrows, 8)
   )
-  # train
-  axs[0].plot(
-    range(len(Y_train)), 
-    Y_train,
-    color = mcolors.TABLEAU_COLORS["tab:blue"],
-    marker = "."
-  )
-  axs[0].plot(
-    range(len(Y_train)), 
-    Y_train_pred,
-    color = mcolors.TABLEAU_COLORS["tab:orange"],
-    marker = ".",
-    alpha = 0.5
-  )
-  # validation
-  axs[1].plot(
-    range(len(Y_val)), 
-    Y_val,
-    color = mcolors.TABLEAU_COLORS["tab:blue"],
-    marker = "."
-  )
-  axs[1].plot(
-    range(len(Y_val)), 
-    Y_val_pred,
-    color = mcolors.TABLEAU_COLORS["tab:orange"],
-    marker = ".",
-    alpha = 0.5
-  )
-  # test
-  axs[2].plot(
-    range(len(Y_test)), 
-    Y_test,
-    color = mcolors.TABLEAU_COLORS["tab:blue"],
-    marker = "."
-  )
-  axs[2].plot(
-    range(len(Y_test)), 
-    Y_test_pred,
-    color = mcolors.TABLEAU_COLORS["tab:orange"],
-    marker = ".",
-    alpha = 0.5
-  )
-  plt.savefig(
-    os.path.join(output_folder, f"predictions_{node}.png"),
-    dpi = 300,
-    format = "png",
-    bbox_inches = "tight"
-  )
-  plt.close()
-  return Y_train_pred, Y_val_pred, Y_test_pred
+  idx = 0
+  for data_key, Y_pred in predictions.items():
+    ax = axs if nrows == 1 else axs[idx]
+    Y_data = X_Y_data[data_key][1]
+    ax.plot(
+      range(len(Y_data)),
+      Y_data,
+      color = mcolors.TABLEAU_COLORS["tab:blue"],
+      marker = "."
+    )
+    ax.plot(
+      range(len(Y_data)), 
+      Y_pred,
+      color = mcolors.TABLEAU_COLORS["tab:orange"],
+      marker = ".",
+      alpha = 0.5
+    )
+    ax.set_ylabel(data_key)
+    idx += 1
+  # save figure
+  if output_folder is not None:
+    plt.savefig(
+      os.path.join(output_folder, f"predictions_{node}.png"),
+      dpi = 300,
+      format = "png",
+      bbox_inches = "tight"
+    )
+    plt.close()
+  else:
+    plt.show()
+  return predictions
 
 
 def plot_history(history_df: pd.DataFrame, output_folder: str, node: str):
@@ -370,18 +349,20 @@ def train_local_models(
     (X_train, Y_train), (X_val, Y_val), (X_test, Y_test) = nodes_dataset[
       node
     ]
-    Y_train_pred, Y_val_pred, Y_test_pred = compute_and_plot_predictions(
-      X_train, Y_train, 
-      X_val, Y_val, 
-      X_test, Y_test, 
+    predictions = compute_and_plot_predictions(
+      {
+        "train": (X_train, Y_train), 
+        "val": (X_val, Y_val), 
+        "test": (X_test, Y_test)
+      }, 
       models[node], 
       output_folder, 
       f"{node}_single"
     )
     predictions_json = {
-      "train": Y_train_pred.tolist(),
-      "val": Y_val_pred.tolist(),
-      "test": Y_test_pred.tolist()
+      "train": predictions["train"].tolist(),
+      "val": predictions["val"].tolist(),
+      "test": predictions["test"].tolist()
     }
     with open(
         os.path.join(output_folder, f"{node}_single_pred.json"), "w"
@@ -414,21 +395,20 @@ def train_centralized_model(
   if plot_single_history:
     plot_history(history_df, output_folder, "centralized")
   # compute, plot and save predictions
-  Y_train_pred, Y_val_pred, Y_test_pred = compute_and_plot_predictions(
-    centralized_dataset[0][0], # train
-    centralized_dataset[0][1],
-    centralized_dataset[1][0], # validation
-    centralized_dataset[1][1],
-    centralized_dataset[2][0], # test
-    centralized_dataset[2][1],
+  predictions = compute_and_plot_predictions(
+    {
+      "train": centralized_dataset[0],
+      "val": centralized_dataset[1],
+      "test": centralized_dataset[2]
+    },
     model,
     output_folder, "centralized"
   )
   predictions_json = {
-    "train": Y_train_pred.tolist(),
-    "val": Y_val_pred.tolist(),
-    "test": Y_test_pred.tolist()
-  }
+      "train": predictions["train"].tolist(),
+      "val": predictions["val"].tolist(),
+      "test": predictions["test"].tolist()
+    }
   with open(os.path.join(output_folder, "centralized_pred.json"), "w") as ost:
     ost.write(json.dumps(predictions_json, indent = 2))
   # return
