@@ -79,6 +79,12 @@ def run_simulation(
         json.dump(extended_config.model_dump(), f, indent=True)
 
     test_set = get_test_set()
+    with (workspace_path / "common_test_set.json").open("w") as f:
+        test_set_json = {
+            "X_test": test_set[0].tolist(),
+            "Y_test": test_set[1].tolist()
+        }
+        f.write(json.dumps(test_set_json, indent = 2))
 
     simulator = Simulator(
         create_model=model_creator,
@@ -88,6 +94,9 @@ def run_simulation(
         weight_fn=weight_fn,
     )
 
+    models_folder = Path(extended_config.workspace_dir) / "models"
+    models_folder.mkdir(parents=True, exist_ok=True)
+    
     history = simulator.run_training_simulation()
 
     with (workspace_path / f"history.json").open("w") as file:
