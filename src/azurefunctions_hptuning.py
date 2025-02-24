@@ -137,6 +137,9 @@ def model_builder(hp: keras_tuner.HyperParameters) -> keras.Model:
   optz = Adam(
     learning_rate=hp.Float(
       min_value=0.0005, max_value=0.01, step=0.0005, name="learning_rate"
+    ),
+    epsilon=hp.Float(
+      min_value=0.5e-6, max_value=1e-5, step=0.1e-6, name="epsilon"
     )
   )
   # compile model
