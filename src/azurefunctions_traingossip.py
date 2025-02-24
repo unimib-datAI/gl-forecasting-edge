@@ -8,8 +8,45 @@ from azurefunctions_utils import load_dataset
 
 from pathlib import Path
 import functools
+import argparse
 import random
 import os
+
+
+def parse_arguments() -> argparse.Namespace:
+  """
+  Parse input arguments
+  """
+  parser = argparse.ArgumentParser(
+    description="Train models for Azure function traces with Gossip Learning"
+  )
+  parser.add_argument(
+    "-f", "--base_folder", 
+    help="Paths to the base folder", 
+    type=str,
+    required=True
+  )
+  parser.add_argument(
+    "-c", "--config_file", 
+    help="Config file", 
+    type=str,
+    default="azurefunctions_config.json"
+  )
+  parser.add_argument(
+    "--seed", 
+    help="Seed for random number generation", 
+    type=int,
+    default=4850
+  )
+  parser.add_argument(
+    "--simulations", 
+    help="Simulation indices", 
+    type=int,
+    nargs="+",
+    default=0
+  )
+  args, _ = parser.parse_known_args()
+  return args
 
 
 def get_node_dataset(
@@ -76,9 +113,29 @@ def run_worker(
 
 
 if __name__ == "__main__":
+  args = parse_arguments()
+  base_folder = args.base_folder
+  config_file = args.config_file
+  simulations = args.simulations
+  seed = args.seed
+  if not isinstance(simulations, list) and simulations != "all":
+    simulations = [simulations]
+  # load and validate configuration; define model creator
   config, model_creator = prepare_training("azurefunctions_config.json")
-  i = 0
-  datasets_folder = "../experiments/azurefunctions-dataset2019/10n_k3_15min/seed4850"
-  networks_folder = "../data/networks/porto_10n_3k/seed4850"
-  # run
-  run_worker((config, i, datasets_folder, networks_folder), model_creator)
+  # loop over simulations
+  for i in simulations:
+    n = config.n_nodes
+    k = config.connectivity
+    t = config.data_preparation.time_window
+    # datasets and networks folders
+    datasets_folder = os.path.join(
+      base_folder,
+      f"experiments/azurefunctions-dataset2019/{n}n_{k}k_{t}min/seed{seed}"
+    )
+    networks_folder = os.path.join(
+      f"data/networks/porto_{n}n_{k}k/seed{seed}"
+    )
+    # gossip folder
+    config.workspace_dir = os.path.join(datasets_folder, "gossip")
+    # run
+    run_worker((config, i, datasets_folder, networks_folder), model_creator)
