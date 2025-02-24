@@ -71,7 +71,7 @@ def already_trained(
     output_folder: str, model_keyword: str
   ) -> Tuple[bool, str, str]:
   history_file = os.path.join(output_folder, f"{model_keyword}_history.csv")
-  model_file = os.path.join(output_folder, f"{model_keyword}.h5")
+  model_file = os.path.join(output_folder, f"{model_keyword}.keras")
   at = os.path.exists(history_file) and os.path.exists(model_file)
   return at, history_file, model_file
 
@@ -352,7 +352,7 @@ def train_local_models(
       config = config, 
       model_creator = model_creator, 
       dataset = nodes_dataset[node], 
-      checkpoint_path = os.path.join(output_folder, f"{node}_single.h5")
+      checkpoint_path = os.path.join(output_folder, f"{node}_single.keras")
     )
     # save model
     models[node] = model
@@ -402,7 +402,7 @@ def train_centralized_model(
     config = config,
     model_creator = model_creator,
     dataset = centralized_dataset,
-    checkpoint_path = os.path.join(output_folder, "centralized.h5")
+    checkpoint_path = os.path.join(output_folder, "centralized.keras")
   )
   # plot and save history
   history_df = pd.DataFrame(history)

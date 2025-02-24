@@ -206,7 +206,7 @@ def _get_node_predictions(
 ) -> dict[NodeId, dict[NodeId, np.ndarray]]:
     result: dict[NodeId, dict[NodeId, np.ndarray]] = {}
     for i in range(n_nodes):
-        model_name = f"{i}_single.h5" if single else f"{i}.h5"
+        model_name = f"{i}_single.keras" if single else f"{i}.keras"
         model = load_model(models_dir / model_name)
 
         predict_test_sets = [i, *network.neighbors(i)]
@@ -321,11 +321,11 @@ def _get_predictions_with_drop_antenna(
     for node in range(n_nodes):
         match eval_mode:
             case EvaluationMode.SINGLE:
-                model_name = f"{node}_single.h5"
+                model_name = f"{node}_single.keras"
             case EvaluationMode.GOSSIP:
-                model_name = f"{node}.h5"
+                model_name = f"{node}.keras"
             case EvaluationMode.CENTRALIZED:
-                model_name = "centralized.h5"
+                model_name = "centralized.keras"
             case _:
                 raise Exception("unknown eval mode")
 
@@ -423,7 +423,7 @@ def _compute_predictions(
     )
 
     centralized_pred = _get_centralized_predictions(
-        model_path=datasets_dir / "models" / "centralized.h5",
+        model_path=datasets_dir / "models" / "centralized.keras",
         test_sets=test_sets,
         scaling_factor=scaling_factor,
     )
