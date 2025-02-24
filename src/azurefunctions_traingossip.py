@@ -133,6 +133,7 @@ if __name__ == "__main__":
       f"experiments/azurefunctions-dataset2019/{n}n_{k}k_{t}min/seed{seed}"
     )
     networks_folder = os.path.join(
+      base_folder, 
       f"data/networks/porto_{n}n_{k}k/seed{seed}"
     )
     # gossip folder
