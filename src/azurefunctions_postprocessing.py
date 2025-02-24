@@ -1,6 +1,8 @@
 from azurefunctions_train import compute_and_plot_predictions
 from azurefunctions_utils import load_dataset
 
+from utils.metrics import compute_metrics
+
 from matplotlib import colors as mcolors
 from keras.api.models import load_model
 import matplotlib.pyplot as plt
@@ -59,6 +61,7 @@ def compute_predictions(
 def load_existing_predictions(data_folder: str, nodes: list) -> pd.DataFrame:
   # loop over nodes
   all_predictions = pd.DataFrame()
+  all_metrics = {"key": [], "node": [], "metrics": []}
   for node in nodes:
     # load data
     data = load_dataset(data_folder, node)
@@ -74,21 +77,31 @@ def load_existing_predictions(data_folder: str, nodes: list) -> pd.DataFrame:
     # get train, val, test
     for idx, (key, pred) in enumerate(predictions.items()):
       Y_real = data[idx][1]
+      # save
       df = pd.DataFrame({
         "real": [float(y[0]) for y in Y_real],
         "pred": [float(y[0]) for y in pred],
         "key": [key] * len(Y_real),
-        "node": [node] * len(Y_real)
+        "node": [node] * len(Y_real),
       })
       all_predictions = pd.concat([all_predictions, df], ignore_index = True)
-  return all_predictions
+      # compute metrics
+      metrics = compute_metrics(Y_real, pred)
+      all_metrics["key"].append(key)
+      all_metrics["node"].append(node)
+      all_metrics["metrics"].append(metrics)
+  # extract some surely-relevant metrics
+  all_metrics = pd.DataFrame(all_metrics)
+  all_metrics["mape"] = [m.mape for m in all_metrics["metrics"]]
+  all_metrics["mse"] = [m.mse for m in all_metrics["metrics"]]
+  return all_predictions, all_metrics
 
 
 def plot_predictions_with_average(
     all_predictions: pd.DataFrame, rolling_window: int = 4
   ):
   for (node, key), full_pred in all_predictions.groupby(["node", "key"]):
-    pred = full_pred[["real", "pred"]]
+    pred = full_pred[["real", "pred"]].copy(deep = True)
     pred["real_avg"] = pred["real"].rolling(window = rolling_window).mean()
     pred.plot()
     plt.title(f"{node}, {key}")
@@ -96,13 +109,10 @@ def plot_predictions_with_average(
 
 
 if __name__ == "__main__":
-  # data_folder = "/Users/federicafilippini/Documents/TEMP/gossip/t60/3layers/0"
-  # nodes = list(range(9)) + ["centralized"]
-  # all_predictions = load_existing_predictions(data_folder, nodes)
-  # plot_predictions_with_average(all_predictions, 4)
+  data_folder = "/Users/federicafilippini/Documents/GitHub/FORKs/gl-forecasting-edge/experiments/SERVER/0"
+  nodes = list(range(9)) + ["centralized"]
+  all_predictions, all_metrics = load_existing_predictions(data_folder, nodes)
+  plot_predictions_with_average(all_predictions, 4)
   #
-  models_folder = "../experiments/azurefunctions-dataset2019/10n_k3_15min/seed4850/gossip/0/models"
-  common_test_file = "../experiments/azurefunctions-dataset2019/10n_k3_15min/seed4850/gossip/0/common_test_set.json"
-  data_folder = "../experiments/azurefunctions-dataset2019/10n_k3_15min/seed4850/0"
-  compute_predictions("../experiments/azurefunctions-dataset2019/10n_k3_15min/seed4850", 0)
-
+  # base_folder = "/Users/federicafilippini/Documents/GitHub/FORKs/gl-forecasting-edge/experiments/SERVER"
+  # compute_predictions(base_folder, 0)
