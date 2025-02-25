@@ -6,6 +6,7 @@ from gossiplearning.config import Config
 from azurefunctions_train import prepare_training
 from azurefunctions_utils import load_dataset
 
+from datetime import datetime
 from pathlib import Path
 import functools
 import argparse
@@ -124,6 +125,9 @@ if __name__ == "__main__":
   config, model_creator = prepare_training("azurefunctions_config.json")
   # loop over simulations
   for i in simulations:
+    print(80 * "-")
+    print(f"Simulation {i} starts on {datetime.now().strftime('%Y-%m-%d_%H-%M-%S.%f')}")
+    print(80 * "-")
     n = config.n_nodes
     k = config.connectivity
     t = config.data_preparation.time_window
