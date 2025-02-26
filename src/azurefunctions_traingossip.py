@@ -143,7 +143,8 @@ if __name__ == "__main__":
       f"data/networks/porto_{n}n_{k}k/seed{seed}"
     )
     # gossip folder
-    config.workspace_dir = os.path.join(datasets_folder, "gossip")
+    ms = config.training.merge_strategy
+    config.workspace_dir = os.path.join(datasets_folder, f"gossip-{ms}")
     # set seed
     np.random.seed(seed)
     tf.random.set_seed(seed)
