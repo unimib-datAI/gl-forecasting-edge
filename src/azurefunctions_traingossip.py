@@ -8,6 +8,8 @@ from azurefunctions_utils import load_dataset
 
 from datetime import datetime
 from pathlib import Path
+import tensorflow as tf
+import numpy as np
 import functools
 import argparse
 import random
@@ -142,5 +144,9 @@ if __name__ == "__main__":
     )
     # gossip folder
     config.workspace_dir = os.path.join(datasets_folder, "gossip")
+    # set seed
+    np.random.seed(seed)
+    tf.random.set_seed(seed)
+    random.seed(seed)
     # run
     run_worker((config, i, datasets_folder, networks_folder), model_creator)
