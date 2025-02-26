@@ -9,10 +9,12 @@ from matplotlib import colors as mcolors
 from keras.api.models import load_model
 import matplotlib.pyplot as plt
 from typing import Tuple
+import tensorflow as tf
 import pandas as pd
 import numpy as np
 import functools
 import argparse
+import random
 import json
 import os
 
@@ -320,6 +322,7 @@ def train_local_models(
     config: Config, 
     model_creator: functools.partial, 
     nodes_dataset: dict, 
+    seed: int,
     output_folder: str,
     plot_single_history: bool
   ) -> Tuple[dict, pd.DataFrame]:
@@ -327,6 +330,11 @@ def train_local_models(
   models = {}
   histories = pd.DataFrame()
   for node in nodes_dataset:
+    # set seed
+    np.random.seed(seed)
+    tf.random.set_seed(seed)
+    random.seed(seed)
+    # train
     model, history = train_one_model(
       config = config, 
       model_creator = model_creator, 
@@ -420,6 +428,7 @@ def run_single_training_experiment(
     simulation: int,
     config: Config, 
     model_creator: functools.partial, 
+    seed: int,
     mode: str = "centralized",
     plot_single_history: bool = False
   ) -> Tuple[dict, pd.DataFrame]:
@@ -432,6 +441,10 @@ def run_single_training_experiment(
   models = {}
   histories = pd.DataFrame()
   if mode == "centralized":
+    # set seed
+    np.random.seed(seed)
+    tf.random.set_seed(seed)
+    random.seed(seed)
     # centralized training
     is_already_trained, history_file, model_file = already_trained(
       output_folder, "centralized"
@@ -472,6 +485,7 @@ def run_single_training_experiment(
         config = config,
         model_creator = model_creator,
         nodes_dataset = dataset,
+        seed = seed,
         output_folder = output_folder,
         plot_single_history = plot_single_history
       )
@@ -512,6 +526,7 @@ def train(
         simulation = simulation,
         config = config,
         model_creator = model_creator,
+        seed = seed,
         mode = mode,
         plot_single_history = plot_single_history
       )
