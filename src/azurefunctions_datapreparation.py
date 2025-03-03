@@ -22,13 +22,20 @@ def parse_arguments() -> argparse.Namespace:
   )
   parser.add_argument(
     "-i", "--data_folder", 
-    help="Paths to the base data folder", 
+    help=(
+      "Paths to the base data folder (the one where "
+      "`azurefunctions-dataset2019/by_owner_flat_invocations_*.csv` and "
+      "`networks/` are)"
+    ), 
     type=str,
     required=True
   )
   parser.add_argument(
     "-o", "--results_folder", 
-    help="Paths to the base results folder", 
+    help=(
+      "Paths to the base results folder (the one where "
+      "`azurefunctions-dataset2019/{n}n_{k}k_{t}min/`should be created)"
+    ), 
     type=str,
     required=True
   )
