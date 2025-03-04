@@ -9,8 +9,44 @@ import matplotlib.pyplot as plt
 from typing import Tuple
 import pandas as pd
 import numpy as np
+import argparse
 import json
 import os
+
+
+def parse_arguments() -> argparse.Namespace:
+  """
+  Parse input arguments
+  """
+  parser = argparse.ArgumentParser(
+    description="Postprocessing"
+  )
+  parser.add_argument(
+    "-f", "--base_folder", 
+    help="Paths to the base experiment folder", 
+    type=str,
+    required=True
+  )
+  parser.add_argument(
+    "-m", "--merge_strategy", 
+    help="Merge strategy adopted by GL experiments", 
+    type=str,
+    default="AGE_WEIGHTED"
+  )
+  parser.add_argument(
+    "--nodes", 
+    help="Simulation indices", 
+    nargs="+",
+    default="all"
+  )
+  parser.add_argument(
+    "--simulations", 
+    help="Simulation indices", 
+    nargs="+",
+    default="all"
+  )
+  args, _ = parser.parse_known_args()
+  return args
 
 
 def compute_predictions(
@@ -253,15 +289,28 @@ def plot_predictions_with_average(
       plt.close()
     else:
       plt.show()
-  
 
 
 if __name__ == "__main__":
-  base_folder = "/Users/federicafilippini/Documents/GitHub/FORKs/gl-forecasting-edge/experiments/SERVER/10n_3k_15min/seed1000"
-  merge_strategy = "AGE_WEIGHTED"
-  nodes = list(range(9)) + ["centralized"]
+  # parse arguments
+  args = parse_arguments()
+  base_folder = args.base_folder
+  merge_strategy = args.merge_strategy
+  nodes = args.nodes
+  if not isinstance(nodes, list):
+    if str(nodes) != "all":
+      nodes = [nodes]
+    else:
+      nodes = list(range(9)) + ["centralized"]
+  simulations = args.simulations
+  if not isinstance(simulations, list):
+    if str(simulations) != "all":
+      simulations = [simulations]
+    else:
+      simulations = list(range(10))
+  # run
   all_test_avg_metrics = pd.DataFrame()
-  for idx in range(0,10):
+  for idx in simulations:
     # single/centralized predictions
     data_folder = os.path.join(
       base_folder, str(idx)
