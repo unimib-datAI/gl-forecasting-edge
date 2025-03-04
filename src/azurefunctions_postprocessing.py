@@ -157,6 +157,14 @@ def load_single_centralized_models(data_folder: str, nodes: list) -> dict:
   return models
 
 
+def load_single_data(data_folder: str, nodes: list) -> dict:
+  single_X_Y_data = {}
+  for node in nodes:
+    _, _, test = load_dataset(data_folder, node)
+    single_X_Y_data[node] = {"test": test}
+  return single_X_Y_data
+
+
 def plot_metrics(
     all_metrics: pd.DataFrame, 
     experiment_idx: int, 
@@ -249,8 +257,8 @@ def plot_predictions_with_average(
 
 
 if __name__ == "__main__":
-  base_folder = "/Users/federicafilippini/Documents/GitHub/FORKs/gl-forecasting-edge/experiments/SERVER/10n_3k_15min/seed4850"
-  merge_strategy = "SIMPLE_AVG"
+  base_folder = "/Users/federicafilippini/Documents/GitHub/FORKs/gl-forecasting-edge/experiments/SERVER/10n_3k_15min/seed1000"
+  merge_strategy = "AGE_WEIGHTED"
   nodes = list(range(9)) + ["centralized"]
   all_test_avg_metrics = pd.DataFrame()
   for idx in range(0,10):
@@ -279,7 +287,7 @@ if __name__ == "__main__":
       ["mse", "mape"], 
       os.path.join(base_folder, f"gossip-MergeStrategy.{merge_strategy}")
     )
-    # compute common predictions with single/centralized models
+    # compute common-test predictions with single/centralized models
     common_test = {"common_test": gossip_X_Y_data[0]["common_test"]}
     sc_models = load_single_centralized_models(data_folder, nodes)
     #
@@ -302,6 +310,25 @@ if __name__ == "__main__":
     sc_generalized_metrics["mse"] = [
       m.mse for m in sc_generalized_metrics["metrics"]
     ]
+    # compute local predictions with centralized models
+    local_X_Y_data = load_single_data(data_folder, nodes)
+    plot_folder = os.path.join(data_folder, "local_centralized_predictions")
+    os.makedirs(plot_folder, exist_ok = True)
+    c_local_metrics = {"node": [], "metrics": []}
+    for node, X_Y_data in local_X_Y_data.items():
+      pred = compute_and_plot_predictions(
+        X_Y_data, sc_models["centralized"], plot_folder, node
+      )
+      metrics = compute_metrics(X_Y_data["test"][1], pred["test"])
+      c_local_metrics["node"].append(node)
+      c_local_metrics["metrics"].append(metrics)
+    c_local_metrics = pd.DataFrame(c_local_metrics)
+    c_local_metrics["mape"] = [
+      m.mape * 100 for m in c_local_metrics["metrics"]
+    ]
+    c_local_metrics["mse"] = [
+      m.mse for m in c_local_metrics["metrics"]
+    ]
     # save test metrics
     test_avg_metrics = pd.concat(
       [
@@ -316,10 +343,13 @@ if __name__ == "__main__":
           ].mean(numeric_only = True),
           columns = ["single"]
         ).transpose(),
-        # -- centralized
-        sc_metrics[
-          (sc_metrics["key"] == "test") & (sc_metrics["node"] == "centralized")
-        ][["node", "mape", "mse"]].set_index("node", drop = True),
+        # -- centralized (on local data)
+        pd.DataFrame(
+          c_local_metrics[
+            c_local_metrics["node"] != "centralized"
+          ][["mape", "mse"]].mean(numeric_only = True),
+          columns = ["centralized"]
+        ).transpose(),
         # -- gossip
         pd.DataFrame(
           gossip_metrics[gossip_metrics["key"] == "test"].mean(
@@ -358,5 +388,3 @@ if __name__ == "__main__":
       base_folder, f"all_test_avg_metrics-MergeStrategy.{merge_strategy}.csv"
     )
   )
-    
-      
