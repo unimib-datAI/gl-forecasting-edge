@@ -53,11 +53,17 @@ def parse_arguments() -> argparse.Namespace:
     default=4850
   )
   parser.add_argument(
-    "--simulations", 
-    help="Simulation indices", 
+    "--networks", 
+    help="Network indices", 
     type=int,
     nargs="+",
     default=0
+  )
+  parser.add_argument(
+    "--n_sim_per_network", 
+    help="Number of simulations to run for each network", 
+    type=int,
+    default=1
   )
   parser.add_argument(
     "--plot_single_history", 
@@ -82,7 +88,8 @@ def compute_and_plot_predictions(
     X_Y_data: dict, 
     model,
     output_folder: str,
-    node: str
+    node: str,
+    show_average: bool = False
   ) -> dict:
   # compute predictions
   predictions = {}
@@ -99,20 +106,40 @@ def compute_and_plot_predictions(
   for data_key, Y_pred in predictions.items():
     ax = axs if nrows == 1 else axs[idx]
     Y_data = X_Y_data[data_key][1]
+    # true values
     ax.plot(
       range(len(Y_data)),
       Y_data,
       color = mcolors.TABLEAU_COLORS["tab:blue"],
-      marker = "."
+      marker = ".",
+      label = "real"
     )
+    # average
+    if show_average:
+      avg = pd.DataFrame({
+        "time": range(len(Y_data)),
+        "avg": [y[0] for y in Y_data]
+      })
+      avg.rolling(window = 4).mean().plot(
+        x = "time", 
+        y = "avg",
+        color = mcolors.TABLEAU_COLORS["tab:green"],
+        marker = ".",
+        alpha = 0.8,
+        label = "avg",
+        ax = ax
+      )
+    # predictions
     ax.plot(
       range(len(Y_data)), 
       Y_pred,
       color = mcolors.TABLEAU_COLORS["tab:orange"],
       marker = ".",
-      alpha = 0.5
+      alpha = 0.5,
+      label = "pred"
     )
     ax.set_ylabel(data_key)
+    ax.legend()
     idx += 1
   # save figure
   if output_folder is not None:
@@ -365,7 +392,8 @@ def train_local_models(
       }, 
       models[node], 
       output_folder, 
-      f"{node}_single"
+      f"{node}_single",
+      True
     )
     predictions_json = {
       "train": predictions["train"].tolist(),
@@ -425,7 +453,7 @@ def train_centralized_model(
 
 def run_single_training_experiment(
     base_folder: str,
-    simulation: int,
+    network: int,
     config: Config, 
     model_creator: functools.partial, 
     seed: int,
@@ -433,9 +461,9 @@ def run_single_training_experiment(
     plot_single_history: bool = False
   ) -> Tuple[dict, pd.DataFrame]:
   # build name of data folder
-  data_folder = os.path.join(base_folder, str(simulation))
+  data_folder = os.path.join(base_folder, str(network))
   # build output folder
-  output_folder = os.path.join(data_folder, "results")
+  output_folder = os.path.join(data_folder, f"results_{seed}")
   os.makedirs(output_folder, exist_ok = True)
   # load data and train according to mode
   models = {}
@@ -460,7 +488,9 @@ def run_single_training_experiment(
         plot_single_history = plot_single_history
       )
     else:
-      print(f"  {mode} results for simulation {simulation} already exist!")
+      print(
+        f"  {mode} results for network {network} (seed {seed}) already exist!"
+      )
       models["centralized"] = load_model(model_file)
       history_df = pd.read_csv(history_file)
     histories = pd.concat([histories, history_df], ignore_index = True)
@@ -475,7 +505,8 @@ def run_single_training_experiment(
         dataset[node] = load_dataset(data_folder, node)
       else:
         print(
-          f"  {mode}-{node} results for simulation {simulation} already exist!"
+          f"  {mode}-{node} results for network "
+          f"{network} (seed {seed}) already exist!"
         )
         models[node] = None#load_model(model_file)
         history_df = pd.read_csv(history_file)
@@ -501,7 +532,8 @@ def train(
     base_folder: str,
     modes: str,
     seed: int,
-    simulations: list,
+    networks: list,
+    n_sim_per_network: int,
     plot_single_history: bool
   ) -> Tuple[dict, pd.DataFrame]:
   # load configuration and define model creator
@@ -514,31 +546,35 @@ def train(
     base_folder,
     f"azurefunctions-dataset2019/{n}n_{k}k_{t}min/seed{seed}"
   )
+  # prepare seeds
+  np.random.seed(seed)
+  seeds = np.random.randint(1000, 10000, n_sim_per_network)
   # loop over simulations
   models = {}
   histories = pd.DataFrame()
-  for simulation in simulations:
-    sim_models = {}
-    sim_histories = pd.DataFrame()
-    for mode in modes:
-      mode_models, mode_histories = run_single_training_experiment(
-        base_folder = io_folder,
-        simulation = simulation,
-        config = config,
-        model_creator = model_creator,
-        seed = seed,
-        mode = mode,
-        plot_single_history = plot_single_history
-      )
-      mode_histories["mode"] = [mode] * len(mode_histories)
-      # save
-      sim_models = {**sim_models, **mode_models}
-      sim_histories = pd.concat(
-        [sim_histories, mode_histories], 
-        ignore_index = True
-      )
-    # plot simulation history
-    plot_multinode_history(sim_histories, io_folder, f"{simulation}_all")
+  for network in networks:
+    for simulation, internal_seed in enumerate(seeds):
+      sim_models = {}
+      sim_histories = pd.DataFrame()
+      for mode in modes:
+        mode_models, mode_histories = run_single_training_experiment(
+          base_folder = io_folder,
+          network = network,
+          config = config,
+          model_creator = model_creator,
+          seed = int(internal_seed),
+          mode = mode,
+          plot_single_history = plot_single_history
+        )
+        mode_histories["mode"] = [mode] * len(mode_histories)
+        # save
+        sim_models = {**sim_models, **mode_models}
+        sim_histories = pd.concat(
+          [sim_histories, mode_histories], 
+          ignore_index = True
+        )
+      # plot simulation history
+      plot_multinode_history(sim_histories, io_folder, f"{simulation}_all")
   return models, histories
 
 
@@ -549,18 +585,20 @@ if __name__ == "__main__":
   base_folder = args.base_folder
   modes = args.modes
   seed = args.seed
-  simulations = args.simulations
+  networks = args.networks
+  n_sim_per_network = args.n_sim_per_network
   plot_single_history = args.plot_single_history
-  # config_file = "azurefunctions_config.json"
-  # base_folder = "../experiments"
-  # modes = ["local", "centralized"]
-  # seed = 4850
-  # simulations = 0
   if not isinstance(modes, list):
     modes = [modes]
-  if not isinstance(simulations, list) and simulations != "all":
-    simulations = [simulations]
+  if not isinstance(networks, list) and networks != "all":
+    networks = [networks]
   # run
   _ = train(
-    config_file, base_folder, modes, seed, simulations, plot_single_history
+    config_file, 
+    base_folder, 
+    modes, 
+    seed, 
+    networks, 
+    n_sim_per_network, 
+    plot_single_history
   )

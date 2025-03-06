@@ -58,7 +58,7 @@ def compute_predictions(
   for node, model in models.items():
     X_Y_data = all_X_Y_data[node]
     predictions = compute_and_plot_predictions(
-      X_Y_data, models[node], plot_folder, str(node)
+      X_Y_data, models[node], plot_folder, str(node), True
     )
     # get train, val, test
     for key, pred in predictions.items():
@@ -138,35 +138,48 @@ def load_existing_predictions(
   ) -> Tuple[pd.DataFrame, pd.DataFrame]:
   # loop over nodes
   all_predictions = pd.DataFrame()
-  all_metrics = {"key": [], "node": [], "metrics": []}
+  all_metrics = {"key": [], "node": [], "seed": [], "metrics": []}
   for node in nodes:
     # load data
     data = load_dataset(data_folder, node)
     # load predictions
-    pred_file = ""
-    if node != "centralized":
-      pred_file = os.path.join(data_folder, f"results/{node}_single_pred.json")
-    else:
-      pred_file = os.path.join(data_folder, "results/centralized_pred.json")
-    predictions = {}
-    with open(pred_file, "r") as istream:
-      predictions = json.load(istream)
-    # get train, val, test
-    for idx, (key, pred) in enumerate(predictions.items()):
-      Y_real = data[idx][1]
-      # save
-      df = pd.DataFrame({
-        "real": [float(y[0]) for y in Y_real],
-        "pred": [float(y[0]) for y in pred],
-        "key": [key] * len(Y_real),
-        "node": [node] * len(Y_real),
-      })
-      all_predictions = pd.concat([all_predictions, df], ignore_index = True)
-      # compute metrics
-      metrics = compute_metrics(Y_real, pred)
-      all_metrics["key"].append(key)
-      all_metrics["node"].append(node)
-      all_metrics["metrics"].append(metrics)
+    for foldername in os.listdir(data_folder):
+      # loop over simulations
+      if foldername.startswith("results_"):
+        internal_seed = int(foldername.replace("results_", ""))
+        # load
+        pred_file = ""
+        if node != "centralized":
+          pred_file = os.path.join(
+            data_folder, foldername, f"{node}_single_pred.json"
+          )
+        else:
+          pred_file = os.path.join(
+            data_folder, foldername, "centralized_pred.json"
+          )
+        predictions = {}
+        with open(pred_file, "r") as istream:
+          predictions = json.load(istream)
+        # get train, val, test
+        for idx, (key, pred) in enumerate(predictions.items()):
+          Y_real = data[idx][1]
+          # save
+          df = pd.DataFrame({
+            "real": [float(y[0]) for y in Y_real],
+            "pred": [float(y[0]) for y in pred],
+            "key": [key] * len(Y_real),
+            "node": [node] * len(Y_real),
+            "seed": [internal_seed] * len(Y_real)
+          })
+          all_predictions = pd.concat(
+            [all_predictions, df], ignore_index = True
+          )
+          # compute metrics
+          metrics = compute_metrics(Y_real, pred)
+          all_metrics["key"].append(key)
+          all_metrics["node"].append(node)
+          all_metrics["seed"].append(internal_seed)
+          all_metrics["metrics"].append(metrics)
   # extract some surely-relevant metrics
   all_metrics = pd.DataFrame(all_metrics)
   all_metrics["mape"] = [m.mape * 100 for m in all_metrics["metrics"]]
@@ -177,19 +190,24 @@ def load_existing_predictions(
 def load_single_centralized_models(data_folder: str, nodes: list) -> dict:
   models = {}
   for node in nodes:
-    # get model filename
-    model_filename = None
-    if str(node) != "centralized":
-      model_filename = os.path.join(
-        data_folder, "results", f"{node}_single.keras"
-      )
-    else:
-      model_filename = os.path.join(
-        data_folder, "results", "centralized.keras"
-      )
-    # load model
-    model = load_model(model_filename)
-    models[node] = model
+    # loop over simulations
+    models[node] = {}
+    for foldername in os.listdir(data_folder):
+      if foldername.startswith("results_"):
+        seed = int(foldername.replace("results_", ""))
+        # get model filename
+        model_filename = None
+        if str(node) != "centralized":
+          model_filename = os.path.join(
+            data_folder, foldername, f"{node}_single.keras"
+          )
+        else:
+          model_filename = os.path.join(
+            data_folder, foldername, "centralized.keras"
+          )
+        # load model
+        model = load_model(model_filename)
+        models[node][seed] = model
   return models
 
 
@@ -297,80 +315,107 @@ if __name__ == "__main__":
   base_folder = args.base_folder
   merge_strategy = args.merge_strategy
   nodes = args.nodes
+  networks = args.networks
   if not isinstance(nodes, list):
     if str(nodes) != "all":
       nodes = [nodes]
     else:
       nodes = list(range(9)) + ["centralized"]
-  simulations = args.simulations
-  if not isinstance(simulations, list):
-    if str(simulations) != "all":
-      simulations = [simulations]
+  if not isinstance(networks, list):
+    if str(networks) != "all":
+      networks = [networks]
     else:
-      simulations = list(range(10))
+      networks = list(range(10))
   # run
   all_test_avg_metrics = pd.DataFrame()
-  for idx in simulations:
+  for idx in networks:
     # single/centralized predictions
     data_folder = os.path.join(
       base_folder, str(idx)
     )
     sc_predictions, sc_metrics = load_existing_predictions(data_folder, nodes)
-    plot_predictions_with_average(sc_predictions, 4, data_folder)
-    plot_metrics(sc_metrics, idx, ["mse", "mape"], data_folder)
-    # gossip predictions and metrics
-    gossip_models, gossip_X_Y_data, gplot_folder = load_gossip_models_and_data(
-      base_folder, idx, merge_strategy
+    sc_metrics.to_csv(
+      os.path.join(data_folder, "sc_metrics.csv"), index = False
     )
-    gossip_predictions, gossip_metrics = compute_predictions(
-      gossip_models, gossip_X_Y_data, gplot_folder
-    )
-    plot_predictions_with_average(
-      gossip_predictions, 
-      4, 
-      os.path.join(base_folder, f"gossip-MergeStrategy.{merge_strategy}")
-    )
+    # plot_predictions_with_average(sc_predictions, 4, data_folder)
     plot_metrics(
-      gossip_metrics, 
+      sc_metrics.groupby(
+        ["node","key"]
+      ).mean(numeric_only = True).reset_index().drop("seed", axis = "columns"), 
       idx, 
       ["mse", "mape"], 
-      os.path.join(base_folder, f"gossip-MergeStrategy.{merge_strategy}")
+      data_folder
     )
-    # compute common-test predictions with single/centralized models
-    common_test = {"common_test": gossip_X_Y_data[0]["common_test"]}
+    # gossip predictions and metrics (if any)
+    gossip_predictions, gossip_metrics, sc_generalized_metrics = [None] * 3
     sc_models = load_single_centralized_models(data_folder, nodes)
-    #
-    plot_folder = os.path.join(data_folder, "common_test_predictions")
-    os.makedirs(plot_folder, exist_ok = True)
-    sc_generalized_metrics = {"node": [], "metrics": []}
-    for node, model in sc_models.items():
-      predictions = compute_and_plot_predictions(
-        common_test, model, plot_folder, str(node)
+    if merge_strategy is not None:
+      gossip_models, gossip_X_Y_data, gplot_folder = load_gossip_models_and_data(
+        base_folder, idx, merge_strategy
       )
-      metrics = compute_metrics(
-        common_test["common_test"][1], predictions["common_test"]
+      gossip_predictions, gossip_metrics = compute_predictions(
+        gossip_models, gossip_X_Y_data, gplot_folder
       )
-      sc_generalized_metrics["node"].append(node)
-      sc_generalized_metrics["metrics"].append(metrics)
-    sc_generalized_metrics = pd.DataFrame(sc_generalized_metrics)
-    sc_generalized_metrics["mape"] = [
-      m.mape * 100 for m in sc_generalized_metrics["metrics"]
-    ]
-    sc_generalized_metrics["mse"] = [
-      m.mse for m in sc_generalized_metrics["metrics"]
-    ]
+      plot_predictions_with_average(
+        gossip_predictions, 
+        4, 
+        os.path.join(base_folder, f"gossip-MergeStrategy.{merge_strategy}")
+      )
+      plot_metrics(
+        gossip_metrics, 
+        idx, 
+        ["mse", "mape"], 
+        os.path.join(base_folder, f"gossip-MergeStrategy.{merge_strategy}")
+      )
+      # compute common-test predictions with single/centralized models
+      common_test = {"common_test": gossip_X_Y_data[0]["common_test"]}
+      # -- compute predictions and metrics with all models
+      for node, sim_models in sc_models.items():
+        for seed, model in sim_models.items():
+          # build output folder
+          plot_folder = os.path.join(
+            data_folder, f"results_{seed}", "common_test_predictions"
+          )
+          os.makedirs(plot_folder, exist_ok = True)
+          sc_generalized_metrics = {"node": [], "seed": [], "metrics": []}
+          # compute  
+          predictions = compute_and_plot_predictions(
+            common_test, model, plot_folder, str(node), True
+          )
+          metrics = compute_metrics(
+            common_test["common_test"][1], predictions["common_test"]
+          )
+          sc_generalized_metrics["node"].append(node)
+          sc_generalized_metrics["seed"].append(seed)
+          sc_generalized_metrics["metrics"].append(metrics)
+      sc_generalized_metrics = pd.DataFrame(sc_generalized_metrics)
+      sc_generalized_metrics["mape"] = [
+        m.mape * 100 for m in sc_generalized_metrics["metrics"]
+      ]
+      sc_generalized_metrics["mse"] = [
+        m.mse for m in sc_generalized_metrics["metrics"]
+      ]
+      sc_generalized_metrics.to_csv(
+        os.path.join(data_folder, "sc_generalized_metrics.csv"), index = False
+      )
     # compute local predictions with centralized models
+    # -- load data
     local_X_Y_data = load_single_data(data_folder, nodes)
-    plot_folder = os.path.join(data_folder, "local_centralized_predictions")
-    os.makedirs(plot_folder, exist_ok = True)
-    c_local_metrics = {"node": [], "metrics": []}
-    for node, X_Y_data in local_X_Y_data.items():
-      pred = compute_and_plot_predictions(
-        X_Y_data, sc_models["centralized"], plot_folder, node
+    # -- loop over simulations
+    c_local_metrics = {"node": [], "seed": [], "metrics": []}
+    for seed, model in sc_models["centralized"].items():
+      plot_folder = os.path.join(
+        data_folder, f"results_{seed}", "local_centralized_predictions"
       )
-      metrics = compute_metrics(X_Y_data["test"][1], pred["test"])
-      c_local_metrics["node"].append(node)
-      c_local_metrics["metrics"].append(metrics)
+      os.makedirs(plot_folder, exist_ok = True)
+      for node, X_Y_data in local_X_Y_data.items():
+        pred = compute_and_plot_predictions(
+          X_Y_data, model, plot_folder, node, True
+        )
+        metrics = compute_metrics(X_Y_data["test"][1], pred["test"])
+        c_local_metrics["node"].append(node)
+        c_local_metrics["seed"].append(seed)
+        c_local_metrics["metrics"].append(metrics)
     c_local_metrics = pd.DataFrame(c_local_metrics)
     c_local_metrics["mape"] = [
       m.mape * 100 for m in c_local_metrics["metrics"]
@@ -378,7 +423,16 @@ if __name__ == "__main__":
     c_local_metrics["mse"] = [
       m.mse for m in c_local_metrics["metrics"]
     ]
+    c_local_metrics.to_csv(
+      os.path.join(data_folder, "c_local_metrics.csv"), index = False
+    )
     # save test metrics
+    sc_metrics = sc_metrics.groupby(
+      ["node","key"]
+    ).mean(numeric_only = True).reset_index().drop("seed", axis = "columns")
+    c_local_metrics = c_local_metrics.groupby("node").mean(
+      numeric_only = True
+    ).reset_index().drop("seed", axis = "columns")
     test_avg_metrics = pd.concat(
       [
         # -- single
@@ -398,36 +452,41 @@ if __name__ == "__main__":
             c_local_metrics["node"] != "centralized"
           ][["mape", "mse"]].mean(numeric_only = True),
           columns = ["centralized"]
-        ).transpose(),
-        # -- gossip
-        pd.DataFrame(
-          gossip_metrics[gossip_metrics["key"] == "test"].mean(
-            numeric_only = True
-          ),
-          columns = ["gossip"]
-        ).transpose().drop("node", axis = "columns"),
-        # -- single (generalized)
-        pd.DataFrame(
-          sc_generalized_metrics[
-            sc_generalized_metrics["node"] != "centralized"
-          ].mean(numeric_only = True),
-          columns = ["single (generalized)"]
-        ).transpose(),
-        # -- centralized (generalized)
-        sc_generalized_metrics[
-          sc_generalized_metrics["node"] == "centralized"
-        ][["node", "mape", "mse"]].replace(
-          "centralized", "centralized (generalized)"
-        ).set_index("node", drop = True),
-        # -- gossip (generalized)
-        pd.DataFrame(
-          gossip_metrics[gossip_metrics["key"] == "common_test"].mean(
-            numeric_only = True
-          ),
-          columns = ["gossip (generalized)"]
-        ).transpose().drop("node", axis = "columns")
+        ).transpose()
       ]
     )
+    if merge_strategy is not None:
+      test_avg_metrics = pd.concat(
+        [
+          # -- gossip
+          pd.DataFrame(
+            gossip_metrics[gossip_metrics["key"] == "test"].mean(
+              numeric_only = True
+            ),
+            columns = ["gossip"]
+          ).transpose().drop("node", axis = "columns"),
+          # -- single (generalized)
+          pd.DataFrame(
+            sc_generalized_metrics[
+              sc_generalized_metrics["node"] != "centralized"
+            ].mean(numeric_only = True),
+            columns = ["single (generalized)"]
+          ).transpose(),
+          # -- centralized (generalized)
+          sc_generalized_metrics[
+            sc_generalized_metrics["node"] == "centralized"
+          ][["node", "mape", "mse"]].replace(
+            "centralized", "centralized (generalized)"
+          ).set_index("node", drop = True),
+          # -- gossip (generalized)
+          pd.DataFrame(
+            gossip_metrics[gossip_metrics["key"] == "common_test"].mean(
+              numeric_only = True
+            ),
+            columns = ["gossip (generalized)"]
+          ).transpose().drop("node", axis = "columns")
+        ]
+      )
     test_avg_metrics["idx"] = [idx] * len(test_avg_metrics)
     all_test_avg_metrics = pd.concat(
       [all_test_avg_metrics, test_avg_metrics]
