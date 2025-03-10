@@ -337,19 +337,23 @@ if __name__ == "__main__":
     data_folder = os.path.join(
       base_folder, str(idx)
     )
-    sc_predictions, sc_metrics = load_existing_predictions(data_folder, nodes)
-    sc_metrics.to_csv(
-      os.path.join(data_folder, "sc_metrics.csv"), index = False
-    )
-    # plot_predictions_with_average(sc_predictions, 4, data_folder)
-    plot_metrics(
-      sc_metrics.groupby(
-        ["node","key"]
-      ).mean(numeric_only = True).reset_index().drop("seed", axis = "columns"), 
-      idx, 
-      ["mse", "mape"], 
-      data_folder
-    )
+    sc_metrics = None
+    if os.path.exists(os.path.join(data_folder, "sc_metrics.csv")):
+      sc_metrics = pd.read_csv(os.path.join(data_folder, "sc_metrics.csv"))
+    else:
+      sc_predictions, sc_metrics = load_existing_predictions(data_folder, nodes)
+      sc_metrics.to_csv(
+        os.path.join(data_folder, "sc_metrics.csv"), index = False
+      )
+      # plot_predictions_with_average(sc_predictions, 4, data_folder)
+      plot_metrics(
+        sc_metrics.groupby(
+          ["node","key"]
+        ).mean(numeric_only = True).reset_index().drop("seed", axis = "columns"), 
+        idx, 
+        ["mse", "mape"], 
+        data_folder
+      )
     # gossip predictions and metrics (if any)
     gossip_predictions, gossip_metrics, sc_generalized_metrics = [None] * 3
     sc_models = load_single_centralized_models(data_folder, nodes)
@@ -374,69 +378,89 @@ if __name__ == "__main__":
       # compute common-test predictions with single/centralized models
       common_test = {"common_test": gossip_X_Y_data[0]["common_test"]}
       # -- compute predictions and metrics with all models
-      sc_generalized_metrics = {"node": [], "seed": [], "metrics": []}
-      for node, sim_models in sc_models.items():
-        for seed, model in sim_models.items():
-          # build output folder
-          plot_folder = os.path.join(
-            data_folder, f"results_{seed}", "common_test_predictions"
-          )
-          os.makedirs(plot_folder, exist_ok = True)
-          # compute  
-          predictions = compute_and_plot_predictions(
-            common_test, model, plot_folder, str(node), True
-          )
-          metrics = compute_metrics(
-            common_test["common_test"][1], predictions["common_test"]
-          )
-          sc_generalized_metrics["node"].append(node)
-          sc_generalized_metrics["seed"].append(seed)
-          sc_generalized_metrics["metrics"].append(metrics)
-      sc_generalized_metrics = pd.DataFrame(sc_generalized_metrics)
-      sc_generalized_metrics["mape"] = [
-        m.mape * 100 for m in sc_generalized_metrics["metrics"]
-      ]
-      sc_generalized_metrics["mse"] = [
-        m.mse for m in sc_generalized_metrics["metrics"]
-      ]
-      sc_generalized_metrics.to_csv(
-        os.path.join(data_folder, "sc_generalized_metrics.csv"), index = False
-      )
-    # compute local predictions with centralized models
-    # -- load data
-    local_X_Y_data = load_single_data(data_folder, nodes)
-    # -- loop over simulations
-    c_local_metrics = {"node": [], "seed": [], "metrics": []}
-    for seed, model in sc_models["centralized"].items():
-      plot_folder = os.path.join(
-        data_folder, f"results_{seed}", "local_centralized_predictions"
-      )
-      os.makedirs(plot_folder, exist_ok = True)
-      for node, X_Y_data in local_X_Y_data.items():
-        pred = compute_and_plot_predictions(
-          X_Y_data, model, plot_folder, node, True
+      sc_generalized_metrics = None
+      if os.path.exists(
+          os.path.join(data_folder, "sc_generalized_metrics.csv")
+        ):
+        sc_generalized_metrics = pd.read_csv(
+          os.path.join(data_folder, "sc_generalized_metrics.csv")
         )
-        metrics = compute_metrics(X_Y_data["test"][1], pred["test"])
-        c_local_metrics["node"].append(node)
-        c_local_metrics["seed"].append(seed)
-        c_local_metrics["metrics"].append(metrics)
-    c_local_metrics = pd.DataFrame(c_local_metrics)
-    c_local_metrics["mape"] = [
-      m.mape * 100 for m in c_local_metrics["metrics"]
-    ]
-    c_local_metrics["mse"] = [
-      m.mse for m in c_local_metrics["metrics"]
-    ]
-    c_local_metrics.to_csv(
-      os.path.join(data_folder, "c_local_metrics.csv"), index = False
-    )
+      else:
+        sc_generalized_metrics = {"node": [], "seed": [], "metrics": []}
+        for node, sim_models in sc_models.items():
+          for seed, model in sim_models.items():
+            # build output folder
+            plot_folder = os.path.join(
+              data_folder, f"results_{seed}", "common_test_predictions"
+            )
+            os.makedirs(plot_folder, exist_ok = True)
+            # compute  
+            predictions = compute_and_plot_predictions(
+              common_test, model, plot_folder, str(node), True
+            )
+            metrics = compute_metrics(
+              common_test["common_test"][1], predictions["common_test"]
+            )
+            sc_generalized_metrics["node"].append(node)
+            sc_generalized_metrics["seed"].append(seed)
+            sc_generalized_metrics["metrics"].append(metrics)
+        sc_generalized_metrics = pd.DataFrame(sc_generalized_metrics)
+        sc_generalized_metrics["mape"] = [
+          m.mape * 100 for m in sc_generalized_metrics["metrics"]
+        ]
+        sc_generalized_metrics["mse"] = [
+          m.mse for m in sc_generalized_metrics["metrics"]
+        ]
+        sc_generalized_metrics.to_csv(
+          os.path.join(data_folder, "sc_generalized_metrics.csv"), 
+          index = False
+        )
+    # compute local predictions with centralized models
+    c_local_metrics = None
+    if os.path.exists(os.path.join(data_folder, "c_local_metrics.csv")):
+      c_local_metrics = pd.read_csv(
+        os.path.join(data_folder, "c_local_metrics.csv")
+      )
+    else:
+      # -- load data
+      local_X_Y_data = load_single_data(data_folder, nodes)
+      # -- loop over simulations
+      c_local_metrics = {"node": [], "seed": [], "metrics": []}
+      for seed, model in sc_models["centralized"].items():
+        plot_folder = os.path.join(
+          data_folder, f"results_{seed}", "local_centralized_predictions"
+        )
+        os.makedirs(plot_folder, exist_ok = True)
+        for node, X_Y_data in local_X_Y_data.items():
+          pred = compute_and_plot_predictions(
+            X_Y_data, model, plot_folder, node, True
+          )
+          metrics = compute_metrics(X_Y_data["test"][1], pred["test"])
+          c_local_metrics["node"].append(node)
+          c_local_metrics["seed"].append(seed)
+          c_local_metrics["metrics"].append(metrics)
+      c_local_metrics = pd.DataFrame(c_local_metrics)
+      c_local_metrics["mape"] = [
+        m.mape * 100 for m in c_local_metrics["metrics"]
+      ]
+      c_local_metrics["mse"] = [
+        m.mse for m in c_local_metrics["metrics"]
+      ]
+      c_local_metrics.to_csv(
+        os.path.join(data_folder, "c_local_metrics.csv"), index = False
+      )
     # save test metrics
+    # -- average over simulations
     sc_metrics = sc_metrics.groupby(
-      ["node","key"]
+      ["node", "key"]
     ).mean(numeric_only = True).reset_index().drop("seed", axis = "columns")
     c_local_metrics = c_local_metrics.groupby("node").mean(
       numeric_only = True
     ).reset_index().drop("seed", axis = "columns")
+    sc_generalized_metrics = sc_generalized_metrics.groupby("node").mean(
+      numeric_only = True
+    ).reset_index().drop("seed", axis = "columns")
+    # -- concat
     test_avg_metrics = pd.concat(
       [
         # -- single
