@@ -50,32 +50,35 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def compute_predictions(
-    models: dict, all_X_Y_data: dict, plot_folder: str
+    models: dict, all_X_Y_data: dict, plot_folders: str
   ) -> Tuple[pd.DataFrame, pd.DataFrame]:
   # compute and plot predictions
   all_predictions = pd.DataFrame()
-  all_metrics = {"key": [], "node": [], "metrics": []}
-  for node, model in models.items():
-    X_Y_data = all_X_Y_data[node]
-    predictions = compute_and_plot_predictions(
-      X_Y_data, models[node], plot_folder, str(node), True
-    )
-    # get train, val, test
-    for key, pred in predictions.items():
-      Y_real = X_Y_data[key][1]
-      # save
-      df = pd.DataFrame({
-        "real": [float(y[0]) for y in Y_real],
-        "pred": [float(y[0]) for y in pred],
-        "key": [key] * len(Y_real),
-        "node": [node] * len(Y_real),
-      })
-      all_predictions = pd.concat([all_predictions, df], ignore_index = True)
-      # compute metrics
-      metrics = compute_metrics(Y_real, pred)
-      all_metrics["key"].append(key)
-      all_metrics["node"].append(node)
-      all_metrics["metrics"].append(metrics)
+  all_metrics = {"key": [], "node": [], "seed": [], "metrics": []}
+  for node, sim_models in models.items():
+    for seed, model in sim_models.items():
+      X_Y_data = all_X_Y_data[node][seed]
+      predictions = compute_and_plot_predictions(
+        X_Y_data, model, plot_folders[seed], str(node), True
+      )
+      # get train, val, test
+      for key, pred in predictions.items():
+        Y_real = X_Y_data[key][1]
+        # save
+        df = pd.DataFrame({
+          "real": [float(y[0]) for y in Y_real],
+          "pred": [float(y[0]) for y in pred],
+          "key": [key] * len(Y_real),
+          "node": [node] * len(Y_real),
+          "seed": [seed] * len(Y_real)
+        })
+        all_predictions = pd.concat([all_predictions, df], ignore_index = True)
+        # compute metrics
+        metrics = compute_metrics(Y_real, pred)
+        all_metrics["key"].append(key)
+        all_metrics["node"].append(node)
+        all_metrics["seed"].append(seed)
+        all_metrics["metrics"].append(metrics)
   # extract some surely-relevant metrics
   all_metrics = pd.DataFrame(all_metrics)
   all_metrics["mape"] = [m.mape * 100 for m in all_metrics["metrics"]]
@@ -84,53 +87,57 @@ def compute_predictions(
 
 
 def load_gossip_models_and_data(
-    base_folder: str, simulation_index: int, merge_strategy: str
-  ) -> Tuple[dict, dict, str]:
-  models_folder = os.path.join(
-    base_folder, 
-    f"gossip-MergeStrategy.{merge_strategy}", 
-    str(simulation_index), 
-    "models"
-  )
-  data_folder = os.path.join(
-    base_folder, str(simulation_index)
-  )
-  common_test_file = os.path.join(
-    base_folder, 
-    f"gossip-MergeStrategy.{merge_strategy}", 
-    str(simulation_index), 
-    "common_test_set.json"
-  )
-  plot_folder = os.path.join(
-    base_folder, 
-    f"gossip-MergeStrategy.{merge_strategy}", 
-    str(simulation_index), 
-    "plots"
-  )
-  # load common test set
-  X_test, Y_test = None, None
-  with open(common_test_file, "r") as istream:
-    common_test_set = json.load(istream)
-    X_test = np.array(common_test_set["X_test"])
-    Y_test = np.array(common_test_set["Y_test"])
-  # load models and nodes-specific data
+    base_folder: str, network_index: int, merge_strategy: str
+  ) -> Tuple[dict, dict, dict]:
+  # data folder
+  data_folder = os.path.join(base_folder, str(network_index))
+  # loop over simulations
   models = {}
   all_X_Y_data = {}
-  for model_filename in os.listdir(models_folder):
-    # get node id
-    node = int(model_filename.split(".")[0])
-    # load model
-    model = load_model(os.path.join(models_folder, model_filename))
-    models[node] = model
-    # load data
-    train, val, test = load_dataset(data_folder, node)
-    all_X_Y_data[node] = {
-      "train": train,
-      "val": val,
-      "test": test,
-      "common_test": [X_test, Y_test]
-    }
-  return models, all_X_Y_data, plot_folder
+  plot_folders = {}
+  for foldername in os.listdir(base_folder):
+    if foldername.startswith(f"gossip-MergeStrategy.{merge_strategy}_"):
+      # get seed
+      internal_seed = int(foldername.removeprefix(
+        f"gossip-MergeStrategy.{merge_strategy}_"
+      ))
+      # define folders and files
+      models_folder = os.path.join(
+        base_folder, foldername, str(network_index), "models"
+      )
+      common_test_file = os.path.join(
+        base_folder, foldername, str(network_index), "common_test_set.json"
+      )
+      plot_folder = os.path.join(
+        base_folder, foldername, str(network_index), "plots"
+      )
+      plot_folders[internal_seed] = plot_folder
+      # load common test set
+      X_test, Y_test = None, None
+      with open(common_test_file, "r") as istream:
+        common_test_set = json.load(istream)
+        X_test = np.array(common_test_set["X_test"])
+        Y_test = np.array(common_test_set["Y_test"])
+      # load models and nodes-specific data
+      for model_filename in os.listdir(models_folder):
+        # get node id
+        node = int(model_filename.split(".")[0])
+        # load model
+        model = load_model(os.path.join(models_folder, model_filename))
+        if node not in models:
+          models[node] = {}
+        models[node][internal_seed] = model
+        # load data
+        train, val, test = load_dataset(data_folder, node)
+        if node not in all_X_Y_data:
+          all_X_Y_data[node] = {}
+        all_X_Y_data[node][internal_seed] = {
+          "train": train,
+          "val": val,
+          "test": test,
+          "common_test": [X_test, Y_test]
+        }
+  return models, all_X_Y_data, plot_folders
 
 
 def load_existing_predictions(
@@ -320,6 +327,7 @@ if __name__ == "__main__":
   merge_strategy = "AGE_WEIGHTED"
   nodes = "all"
   networks = "all"
+  recompute_all = True
   if not isinstance(nodes, list):
     if str(nodes) != "all":
       nodes = [nodes]
@@ -338,7 +346,9 @@ if __name__ == "__main__":
       base_folder, str(idx)
     )
     sc_metrics = None
-    if os.path.exists(os.path.join(data_folder, "sc_metrics.csv")):
+    if not recompute_all and os.path.exists(
+        os.path.join(data_folder, "sc_metrics.csv")
+      ):
       sc_metrics = pd.read_csv(os.path.join(data_folder, "sc_metrics.csv"))
     else:
       sc_predictions, sc_metrics = load_existing_predictions(data_folder, nodes)
@@ -358,28 +368,47 @@ if __name__ == "__main__":
     gossip_predictions, gossip_metrics, sc_generalized_metrics = [None] * 3
     sc_models = load_single_centralized_models(data_folder, nodes)
     if merge_strategy is not None:
-      gossip_models, gossip_X_Y_data, gplot_folder = load_gossip_models_and_data(
+      # -- load data
+      g_models, g_X_Y_data, gplot_folders = load_gossip_models_and_data(
         base_folder, idx, merge_strategy
       )
-      gossip_predictions, gossip_metrics = compute_predictions(
-        gossip_models, gossip_X_Y_data, gplot_folder
-      )
-      plot_predictions_with_average(
-        gossip_predictions, 
-        4, 
-        os.path.join(base_folder, f"gossip-MergeStrategy.{merge_strategy}")
-      )
-      plot_metrics(
-        gossip_metrics, 
-        idx, 
-        ["mse", "mape"], 
-        os.path.join(base_folder, f"gossip-MergeStrategy.{merge_strategy}")
-      )
+      # -- compute predictions and metrics
+      if not recompute_all and os.path.exists(
+          os.path.join(
+            base_folder, f"{idx}_gossip_metrics_{merge_strategy}.csv"
+          )
+        ):
+        gossip_metrics = pd.read_csv(
+          os.path.join(
+            base_folder, f"{idx}_gossip_metrics_{merge_strategy}.csv"
+          )
+        )
+      else:
+        gossip_predictions, gossip_metrics = compute_predictions(
+          g_models, g_X_Y_data, gplot_folders
+        )
+        for seed, plot_folder in gplot_folders.items():
+          plot_predictions_with_average(
+            gossip_predictions[gossip_predictions["seed"] == seed], 
+            4, 
+            plot_folder
+          )
+          plot_metrics(
+            gossip_metrics[gossip_metrics["seed"] == seed], 
+            idx, 
+            ["mse", "mape"], 
+            plot_folder
+          )
+        gossip_metrics.to_csv(
+          os.path.join(
+            base_folder, f"{idx}_gossip_metrics_{merge_strategy}.csv"
+          ),
+          index = False
+        )
       # compute common-test predictions with single/centralized models
-      common_test = {"common_test": gossip_X_Y_data[0]["common_test"]}
       # -- compute predictions and metrics with all models
       sc_generalized_metrics = None
-      if os.path.exists(
+      if not recompute_all and os.path.exists(
           os.path.join(data_folder, "sc_generalized_metrics.csv")
         ):
         sc_generalized_metrics = pd.read_csv(
@@ -389,21 +418,26 @@ if __name__ == "__main__":
         sc_generalized_metrics = {"node": [], "seed": [], "metrics": []}
         for node, sim_models in sc_models.items():
           for seed, model in sim_models.items():
-            # build output folder
-            plot_folder = os.path.join(
-              data_folder, f"results_{seed}", "common_test_predictions"
-            )
-            os.makedirs(plot_folder, exist_ok = True)
-            # compute  
-            predictions = compute_and_plot_predictions(
-              common_test, model, plot_folder, str(node), True
-            )
-            metrics = compute_metrics(
-              common_test["common_test"][1], predictions["common_test"]
-            )
-            sc_generalized_metrics["node"].append(node)
-            sc_generalized_metrics["seed"].append(seed)
-            sc_generalized_metrics["metrics"].append(metrics)
+            if seed in g_X_Y_data[0]:
+              # common test set
+              common_test = {
+                "common_test": g_X_Y_data[0][seed]["common_test"]
+              }
+              # build output folder
+              plot_folder = os.path.join(
+                data_folder, f"results_{seed}", "common_test_predictions"
+              )
+              os.makedirs(plot_folder, exist_ok = True)
+              # compute  
+              predictions = compute_and_plot_predictions(
+                common_test, model, plot_folder, str(node), True
+              )
+              metrics = compute_metrics(
+                common_test["common_test"][1], predictions["common_test"]
+              )
+              sc_generalized_metrics["node"].append(node)
+              sc_generalized_metrics["seed"].append(seed)
+              sc_generalized_metrics["metrics"].append(metrics)
         sc_generalized_metrics = pd.DataFrame(sc_generalized_metrics)
         sc_generalized_metrics["mape"] = [
           m.mape * 100 for m in sc_generalized_metrics["metrics"]
@@ -417,7 +451,9 @@ if __name__ == "__main__":
         )
     # compute local predictions with centralized models
     c_local_metrics = None
-    if os.path.exists(os.path.join(data_folder, "c_local_metrics.csv")):
+    if not recompute_all and os.path.exists(
+        os.path.join(data_folder, "c_local_metrics.csv")
+      ):
       c_local_metrics = pd.read_csv(
         os.path.join(data_folder, "c_local_metrics.csv")
       )
