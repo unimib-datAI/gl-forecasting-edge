@@ -31,17 +31,17 @@ def parse_arguments() -> argparse.Namespace:
     "-m", "--merge_strategy", 
     help="Merge strategy adopted by GL experiments", 
     type=str,
-    default="AGE_WEIGHTED"
+    default=None
   )
   parser.add_argument(
     "--nodes", 
-    help="Simulation indices", 
+    help="Indices of nodes to consider (default: [0,10) + 'centralized')", 
     nargs="+",
     default="all"
   )
   parser.add_argument(
-    "--simulations", 
-    help="Simulation indices", 
+    "--networks", 
+    help="Network indices (default: [0,10)", 
     nargs="+",
     default="all"
   )
@@ -310,12 +310,16 @@ def plot_predictions_with_average(
 
 
 if __name__ == "__main__":
-  # parse arguments
-  args = parse_arguments()
-  base_folder = args.base_folder
-  merge_strategy = args.merge_strategy
-  nodes = args.nodes
-  networks = args.networks
+  # # parse arguments
+  # args = parse_arguments()
+  # base_folder = args.base_folder
+  # merge_strategy = args.merge_strategy
+  # nodes = args.nodes
+  # networks = args.networks
+  base_folder = "/Users/federicafilippini/Documents/GitHub/FORKs/gl-forecasting-edge/experiments/azurefunctions-dataset2019/SERVER/seed2000"
+  merge_strategy = "AGE_WEIGHTED"
+  nodes = "all"
+  networks = "all"
   if not isinstance(nodes, list):
     if str(nodes) != "all":
       nodes = [nodes]
@@ -370,6 +374,7 @@ if __name__ == "__main__":
       # compute common-test predictions with single/centralized models
       common_test = {"common_test": gossip_X_Y_data[0]["common_test"]}
       # -- compute predictions and metrics with all models
+      sc_generalized_metrics = {"node": [], "seed": [], "metrics": []}
       for node, sim_models in sc_models.items():
         for seed, model in sim_models.items():
           # build output folder
@@ -377,7 +382,6 @@ if __name__ == "__main__":
             data_folder, f"results_{seed}", "common_test_predictions"
           )
           os.makedirs(plot_folder, exist_ok = True)
-          sc_generalized_metrics = {"node": [], "seed": [], "metrics": []}
           # compute  
           predictions = compute_and_plot_predictions(
             common_test, model, plot_folder, str(node), True
@@ -458,6 +462,7 @@ if __name__ == "__main__":
     if merge_strategy is not None:
       test_avg_metrics = pd.concat(
         [
+          test_avg_metrics,
           # -- gossip
           pd.DataFrame(
             gossip_metrics[gossip_metrics["key"] == "test"].mean(
