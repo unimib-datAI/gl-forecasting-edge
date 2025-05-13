@@ -7,20 +7,17 @@
 ## Synopsis
 
 This repository contains a discrete-event simulator capable of simulating Gossip Learning (GL) with various network topologies and stopping criteria.
-Moreover, it contains all the experimental material for reproducing the empirical evaluation of the paper.
+
+## Data
+
+All the experimental material related to the paper and the assets are available on [Zenodo]().
 
 ## Structure
-```
-.
-├── src
-└── experiments
-```
-
 ### src
 It contains the code of the Python simulator package, utility scripts to run a simulation, and numbered Jupyter Notebooks step-by-step perform an end-to-end simulation (e.g., from dataset preparation to evaluation).
 
-### experiments
-It contains all the data used for experiments, utility scripts for the analysis of the simulation results, and for plot generation.
+### fl-baseline
+It contains the code of a Flower app used as the baseline for Federated Learning experiments.
 
 ## License
 
