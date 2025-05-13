@@ -10,7 +10,7 @@ This repository contains a discrete-event simulator capable of simulating Gossip
 
 ## Data
 
-All the experimental material related to the paper and the assets are available on [Zenodo]().
+All the experimental material related to the paper and the assets are available on [Zenodo](https://doi.org/10.5281/zenodo.15393791).
 
 ## Structure
 ### src
