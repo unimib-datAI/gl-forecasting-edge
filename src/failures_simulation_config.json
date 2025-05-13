@@ -1,0 +1,35 @@
+{
+  "workspace_dir": "experiments/node_failures",
+  "n_nodes": 10,
+  "log_level": 2,
+  "training": {
+    "patience": 5,
+    "min_delta": 0.0,
+    "perc_sent_weights": 1.0,
+    "target_probability": 0.5,
+    "models_folder": "models/",
+    "n_input_features": 9,
+    "n_output_vars": 1,
+    "merge_strategy": "age_weighted",
+    "batch_size": 64,
+    "epochs_per_update": 1,
+    "stop_criterion": "fixed_updates",
+    "fixed_updates": 100,
+    "num_merged_models": 1,
+    "shuffle_batch": true,
+    "finetuning_epochs": 0,
+    "serialize_optimizer": false,
+
+    "failure_mode": "node_failure",
+    "is_time_to_fail_frequency": 60,
+    "node_recovery_time_mean": 125,
+    "node_recovery_time_std": 5,
+    "node_failure_probability": 0.01,
+    "max_percentage_failed_nodes": 1,
+    "link_failure_probability": 0.01
+  },
+  "history": {
+    "eval_test": true,
+    "freq": 5
+  }
+}

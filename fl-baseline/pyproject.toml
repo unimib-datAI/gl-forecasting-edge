@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fl-baseline"
+version = "1.0.0"
+description = ""
+license = "Apache-2.0"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "flwr[simulation]>=1.11.1",
+    "flwr-datasets[vision]>=0.3.0",
+    "tensorflow>=2.11.1",
+    "sh>=2.2.1"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.flwr.app]
+publisher = "aletundo"
+
+[tool.flwr.app.components]
+serverapp = "fl_baseline.server_app:app"
+clientapp = "fl_baseline.client_app:app"
+
+[tool.flwr.app.config]
+num-clients = 10
+num-server-rounds = 100
+local-epochs = 1
+batch-size = 64
+fraction-fit = 0.5
+fraction-evaluate = 1.0
+test-set-percentage = 0.2
+verbose = false
+datasets-dir = "../src/data/datasets"
+experiments-dir = "experiments"
+network-name = "porto_10n_3k"
+network-scenario = 0
+simulation-run = 0
+dataset-name = "4in_notscaled"
+input-features = 9
+input-auxiliary-features = 8
+input-steps = 4
+output-vars = 1
+output-steps = 1
+
+[tool.flwr.federations]
+default = "local-simulation"
+
+[tool.flwr.federations.local-simulation]
+options.num-supernodes = 10
+
