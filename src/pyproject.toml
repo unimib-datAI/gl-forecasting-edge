@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "gossip-learning-simulator"
+version = "0.1.0"
+description = ""
+authors = ["Francesco Regonesi"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10,<3.12"
+matplotlib = "^3.8.0"
+jupyter = "^1.0.0"
+pandas = "^2.1.0"
+numpy = "^1.23.0"
+scikit-learn = "^1.3.0"
+keras = "~2.12.0"
+pydantic = "^2.3.0"
+networkx = "^3.1"
+category-encoders = "^2.6.2"
+scipy = "^1.11.2"
+pyproj = "^3.6.0"
+pyarrow = "^13.0.0"
+fastparquet = "^2023.8.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+
+[tool.poetry.group.linux.dependencies]
+tensorflow = "~2.12"
+
+[tool.poetry.group.mac.dependencies]
+tensorflow-metal = "~0.8.0"
+tensorflow-macos = "~2.12"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

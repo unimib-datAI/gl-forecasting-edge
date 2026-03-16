@@ -288,7 +288,7 @@ class Node:
             str(
                 self._workspace_dir
                 / self._training_config.models_folder
-                / f"{self.id}.h5"
+                / f"{self.id}.keras"
             )
         )
 

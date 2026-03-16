@@ -1,8 +1,22 @@
 # Project-specific files
-src/experiments/
-src/data/
-src/assets/
 experiments/
+# -- assets
+assets/BBox_Milan*
+assets/italy_*
+assets/milan_cells.parquet
+assets/porto_cells.parquet
+assets/porto_taxi_cells.csv
+assets/portugal_cells.csv
+assets/taxi_porto.csv
+# -- data
+data/azurefunctions-dataset2019/invocations_per_function_md.anon.d*.csv
+data/azurefunctions-dataset2019/alldays_*.csv
+data/azurefunctions-dataset2019/by_owner_flat_invocations_*.csv
+data/azurefunctions-dataset2019/http_data.csv
+
+# MacOS files
+.DS_Store
+*/.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
