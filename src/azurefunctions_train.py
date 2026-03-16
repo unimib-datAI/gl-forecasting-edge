@@ -100,7 +100,7 @@ def compute_and_plot_predictions(
   _, axs = plt.subplots(
     nrows = nrows, 
     ncols = 1,
-    figsize = (7 * nrows, 8)
+    figsize = (28, 2 * nrows)
   )
   idx = 0
   for data_key, Y_pred in predictions.items():
